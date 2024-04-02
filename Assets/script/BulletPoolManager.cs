@@ -23,6 +23,8 @@ public class BulletPoolManager : MonoBehaviour
         for (int i = 0; i < initialPoolSize; i++)
         {
             GameObject newBullet = Instantiate(bulletPrefab);
+            // 부모를 지정해주는 코드, 이 코드가 없으면 하이라키창이 너무 지저분해짐
+            newBullet.transform.parent = transform;
             newBullet.SetActive(false);
             bulletPool.Enqueue(newBullet);
         }
