@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449c9f2a300e8014280e1e8096cf947a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 476399285}
   initialPoolSize: 100
 --- !u!4 &189984274
 Transform:

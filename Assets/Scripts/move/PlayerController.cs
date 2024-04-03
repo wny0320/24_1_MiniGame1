@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     // 코딩 스타일이고 회사마다 다르긴 한데 보통 private인 변수는 첫글자 소문자, public은 첫글자 대문자를 주로 씁니다
     [SerializeField, Range(0,10)] // 마우스와 마찬가지
     float walkSpeed = 6.0f;              // 걷는 속도
+    [SerializeField]
+    private GameObject ground;
 
     // 애니메이션
     //Animator animator;  
@@ -26,7 +28,32 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) inputX = -1;
 
 
-        transform.Translate(new Vector2(inputX, inputY) * Time.deltaTime * walkSpeed);  // 키보드에 따른 방향으로 이동속도 만큼 이동 
+        transform.Translate(new Vector2(inputX, inputY) * Time.deltaTime * walkSpeed);  // 키보드에 따른 방향으로 이동속도 만큼 이동
+        transform.position = playerClipping();
+    }
+    /// <summary>
+    /// 플레이어가 움직이는 맵이 네모라는 가정, 다른 모양일 경우 수정 필요
+    /// 추가로 플레이어의 크기를 고려함
+    /// </summary>
+    /// <returns>Vector3, player의 clipping된 좌표</returns>
+    private Vector3 playerClipping()
+    {
+        if (ground == null) return Vector3.zero;
+
+        Transform groundTrans = ground.transform;
+        Vector3 groundPos = groundTrans.position;
+        Vector3 groundScale = groundTrans.lossyScale;
+
+        Vector3 playerPos = transform.position;
+        Vector3 playerScale = transform.lossyScale;
+
+        // 클립핑할 사각형의 왼쪽 아래점과 오른쪽 위의 점을 구함
+        Vector2 clipSquareLeftDown = groundPos - groundScale/2 + playerScale/2;
+        Vector2 clipSquareRightUp = groundPos + groundScale/2 - playerScale/2;
+
+        float clipedXPos = Mathf.Clamp(playerPos.x, clipSquareLeftDown.x, clipSquareRightUp.x);
+        float clipedYPos = Mathf.Clamp(playerPos.y, clipSquareLeftDown.y, clipSquareRightUp.y);
+        return new Vector3(clipedXPos, clipedYPos);
     }
     // Start is called before the first frame update
     void Start()
