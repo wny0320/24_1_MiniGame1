@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : BaseController
@@ -15,13 +17,6 @@ public class PlayerController : BaseController
     //Animator animator;  
 
 
-    //상태 패턴
-    #region StateMachine
-    protected StateMachine stateMachine;
-    protected Dictionary<PlayerState, BaseState> states = new Dictionary<PlayerState, BaseState>();
-    #endregion
-
-
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -30,7 +25,7 @@ public class PlayerController : BaseController
 
         // this.animator = GetComponent<Animator>();
 
-        Manager.Game.Player = gameObject;
+        //Manager.Game.Player = gameObject;
     }
 
     void Update()
@@ -57,10 +52,6 @@ public class PlayerController : BaseController
         stateMachine = new StateMachine(MoveState);
     }
 
-    public override void ChangeState<PlayerState>(PlayerState state)
-    {
-        stateMachine.SetState(states[state]);
-    }
 
     /// <summary>
     /// 플레이어가 움직이는 맵이 네모라는 가정, 다른 모양일 경우 수정 필요
