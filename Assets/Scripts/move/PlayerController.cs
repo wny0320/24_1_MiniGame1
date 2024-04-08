@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,11 +24,13 @@ public class PlayerController : BaseController
 
     void Start()
     {
-        InitStateMachine();
         Application.targetFrameRate = 60;
-        this.rigid2D = GetComponent<Rigidbody2D>();
+        rigid2D = GetComponent<Rigidbody2D>();
+        InitStateMachine();
 
         // this.animator = GetComponent<Animator>();
+
+        Manager.Game.Player = gameObject;
     }
 
     void Update()
@@ -45,14 +48,19 @@ public class PlayerController : BaseController
     {
         //상태 생성
         BaseState MoveState = new PlayerMoveState(this, rigid2D, animator);
+        //회피, 사망, idle, 패링 생성 및 추가 해야됨
 
         //상태 추가
         states.Add(PlayerState.Move, MoveState);
 
-        //state machine 초기값
+        //state machine 초기값- 지금은 일단 move로 해놓음
         stateMachine = new StateMachine(MoveState);
     }
 
+    public override void ChangeState<PlayerState>(PlayerState state)
+    {
+        stateMachine.SetState(states[state]);
+    }
 
     /// <summary>
     /// 플레이어가 움직이는 맵이 네모라는 가정, 다른 모양일 경우 수정 필요

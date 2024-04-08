@@ -18,7 +18,7 @@ public class PlayerMoveState : BaseState
 
     public override void OnStateUpdate()
     {
-
+        rb.velocity = Vector2.left * Time.deltaTime * 10;
     }
 
     public override void OnFixedUpdate()

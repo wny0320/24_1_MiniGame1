@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,5 +16,10 @@ public class BaseController : MonoBehaviour
     private void Update()
     {
         
+    }
+
+    public virtual void ChangeState<T>(T state) where T : Enum
+    {
+
     }
 }
