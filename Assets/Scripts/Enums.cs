@@ -6,6 +6,7 @@ public enum WeaponType
 
 public enum PlayerState
 {
+    Idle,
     Move,
     Dodge,
     Parrying,

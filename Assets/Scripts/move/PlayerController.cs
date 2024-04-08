@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseController
 {
-    Rigidbody2D rigid2D;
 
     [SerializeField, Range(0,10)] 
     float walkSpeed = 6.0f;
@@ -14,10 +13,11 @@ public class PlayerController : MonoBehaviour
     // 애니메이션
     //Animator animator;  
 
+
     //상태 패턴
     #region StateMachine
-    StateMachine stateMachine;
-    private Dictionary<PlayerState, BaseState> states = new Dictionary<PlayerState, BaseState>();
+    protected StateMachine stateMachine;
+    protected Dictionary<PlayerState, BaseState> states = new Dictionary<PlayerState, BaseState>();
     #endregion
 
 
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     private void InitStateMachine()
     {
         //상태 생성
-        BaseState MoveState = new PlayerMoveState(this);
+        BaseState MoveState = new PlayerMoveState(this, rigid2D, animator);
 
         //상태 추가
         states.Add(PlayerState.Move, MoveState);

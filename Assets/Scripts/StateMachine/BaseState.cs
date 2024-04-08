@@ -4,11 +4,15 @@ using UnityEngine;
 
 public abstract class BaseState
 {
-    protected PlayerController pc { get; private set; }
+    protected BaseController controller { get; private set; }
+    protected Rigidbody2D rb;
+    protected Animator animator;
 
-    public BaseState(PlayerController pc)
+    public BaseState(BaseController controller, Rigidbody2D rb = null, Animator animator = null)
     {
-        this.pc = pc;
+        this.controller = controller;
+        this.rb = rb;
+        this.animator = animator;
     }
 
     public abstract void OnStateEnter();

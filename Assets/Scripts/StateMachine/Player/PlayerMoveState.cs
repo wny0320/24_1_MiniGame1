@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerMoveState : BaseState
 {
-    public PlayerMoveState(PlayerController pc) : base(pc)
+    public PlayerMoveState(BaseController controller, Rigidbody2D rb = null, Animator animator = null)
+        : base(controller, rb, animator)
     {
 
     }

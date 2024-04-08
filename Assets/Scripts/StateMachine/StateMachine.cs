@@ -23,7 +23,7 @@ public class StateMachine
     {
         CurrentState.OnStateUpdate();
     }
-
+        
     public void StateFixtedUpdateFunc()
     {
         CurrentState.OnFixedUpdate();
