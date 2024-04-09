@@ -22,6 +22,6 @@ public class InputManager
         if (!Input.anyKey) return;
 
         //플레이어 이동 함수 정의 후 연결 해줘야됨
-        PlayerMove.Invoke();
+        //PlayerMove.Invoke();
     }
 }

@@ -23,8 +23,9 @@ public class BossMoveState : BaseState
     {
         if (playerTrans == null)
             playerTrans = Manager.Game.Player.transform;
-        Vector3 playerDir = Vector3.Normalize(playerTrans.position); // ¡§±‘»≠ ∫§≈Õ
-        rb.transform.position = playerDir * Time.deltaTime * moveSpeed;
+        Vector3 playerDir = Vector3.Normalize((Vector2)playerTrans.position - rb.position);
+        //Debug.Log(playerTrans.position);
+        rb.transform.position += playerDir * Time.deltaTime * moveSpeed;
     }
 
     public override void OnFixedUpdate()
