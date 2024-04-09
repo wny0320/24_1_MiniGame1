@@ -25,7 +25,7 @@ public class PlayerController : BaseController
 
         // this.animator = GetComponent<Animator>();
 
-        //Manager.Game.Player = gameObject;
+        Manager.Game.Player = gameObject;
     }
 
     void Update()
@@ -52,6 +52,11 @@ public class PlayerController : BaseController
         stateMachine = new StateMachine(MoveState);
     }
 
+    public override void ChangeState(Enum state)
+    {
+        int s = Convert.ToInt32(state);
+        stateMachine.SetState(states[(PlayerState)s]);
+    }
 
     /// <summary>
     /// 플레이어가 움직이는 맵이 네모라는 가정, 다른 모양일 경우 수정 필요

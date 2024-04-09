@@ -18,6 +18,10 @@ public class Manager : MonoBehaviour
     public static InputManager Input { get { return instance._input; } }
     #endregion
 
+    private void Start()
+    {
+        Init();
+    }
 
     private void Update()
     {

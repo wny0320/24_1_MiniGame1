@@ -26,9 +26,5 @@ public class BaseController : MonoBehaviour
     }
 
     //추후 문제 생기면 고치면 됨
-    public void ChangeState(Enum state)
-    {
-        int s = Convert.ToInt32(state);
-        stateMachine.SetState(states[(PlayerState)s]);
-    }
+    public virtual void ChangeState(Enum state) { }
 }
