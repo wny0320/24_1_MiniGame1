@@ -15,14 +15,14 @@ public class BossMoveState : BaseState
 
     public override void OnStateEnter()
     {
-        if (playerTrans == null)
-            playerTrans = Manager.Game.Player.transform;
-
+        
     }
 
 
     public override void OnStateUpdate()
     {
+        if (playerTrans == null)
+            playerTrans = Manager.Game.Player.transform;
         Vector3 playerDir = Vector3.Normalize(playerTrans.position); // ¡§±‘»≠ ∫§≈Õ
         rb.transform.position = playerDir * Time.deltaTime * moveSpeed;
     }

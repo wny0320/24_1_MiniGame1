@@ -12,7 +12,7 @@ public abstract class BaseState
     {
         this.controller = controller;
         this.rb = rb;
-        this.animator = animator;
+        this.animator = animator;        
     }
 
     public abstract void OnStateEnter();
