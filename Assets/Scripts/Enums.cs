@@ -12,3 +12,11 @@ public enum PlayerState
     Parrying,
     Die,
 }
+
+public enum BossState
+{
+    Idle,
+    Move,
+    Pattern,
+    Die,
+}
