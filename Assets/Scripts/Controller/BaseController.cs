@@ -8,6 +8,8 @@ public class BaseController : MonoBehaviour
     protected Rigidbody2D rigid2D;
     protected Animator animator;
 
+    public GameObject ground; // Global 로 빼는게 나을듯
+
     //상태 패턴
     #region StateMachine
     protected StateMachine stateMachine;
@@ -25,6 +27,6 @@ public class BaseController : MonoBehaviour
         
     }
 
-    //추후 문제 생기면 고치면 됨
+    //각 컨트롤러 상태 변경을 위해 오버라이드 ㄱㄱ
     public virtual void ChangeState(Enum state) { }
 }

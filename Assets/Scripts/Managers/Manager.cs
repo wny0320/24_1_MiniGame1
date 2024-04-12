@@ -36,10 +36,10 @@ public class Manager : MonoBehaviour
     {
         if(instance == null)
         {
-            GameObject go = GameObject.Find("Managers");
+            GameObject go = FindObjectOfType<Manager>().gameObject;
             if(go == null)
             {
-                go = new GameObject { name = "Managers" };
+                go = new GameObject { name = "Manager" };
                 go.AddComponent<Manager>();
             }
 
