@@ -10,6 +10,9 @@ public class PlayerMoveState : BaseState
 
     Transform transform;
 
+    Vector2 dir = Vector2.zero;
+    float inputX = 0f;
+    float inputY = 0f;
     float walkSpeed = 6.0f;//임시
 
     public PlayerMoveState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Transform transform = null)
@@ -19,6 +22,8 @@ public class PlayerMoveState : BaseState
 
         Manager.Input.PlayerMove -= PlayerMove;
         Manager.Input.PlayerMove += PlayerMove;
+        Manager.Input.GetPlayerDir -= GetDir;
+        Manager.Input.GetPlayerDir += GetDir;
     }
 
     public override void OnStateEnter()
@@ -29,7 +34,14 @@ public class PlayerMoveState : BaseState
 
     public override void OnStateUpdate()
     {
+        animator.SetFloat(X_DIR, inputX);
+        animator.SetFloat(Y_DIR, inputY);
 
+        dir = new Vector2(inputX, inputY).normalized;
+        transform.Translate(dir * Time.deltaTime * walkSpeed);  // 키보드에 따른 방향으로 이동속도 만큼 이동
+        transform.position = PlayerClipping();
+
+        if (Input.GetKeyDown(KeyCode.Space)) Manager.Input.PlayerDodge.Invoke(dir); 
     }
 
     public override void OnFixedUpdate()
@@ -42,24 +54,21 @@ public class PlayerMoveState : BaseState
         animator.SetBool(PLAYER_MOVE, false);
     }
 
+    private Vector2 GetDir() => dir;
 
     private void PlayerMove()
     {
-        if (!Manager.Game.isAlive) return;
+        if (Manager.Input.isDodging || Manager.Input.isParrying) return;
 
-        Manager.Input.isPlayerMove = true;
-        float inputX = Input.GetAxisRaw("Horizontal");
-        float inputY = Input.GetAxisRaw("Vertical");
+        Manager.Input.isMoving = true;
 
-        animator.SetFloat(X_DIR, inputX);
-        animator.SetFloat(Y_DIR, inputY);
-
-        transform.Translate(new Vector2(inputX, inputY) * Time.deltaTime * walkSpeed);  // 키보드에 따른 방향으로 이동속도 만큼 이동
-        transform.position = PlayerClipping();
+        inputX = Input.GetAxisRaw("Horizontal");
+        inputY = Input.GetAxisRaw("Vertical");
 
         if (inputX == 0 && inputY == 0)
         {
-            Manager.Input.isPlayerMove = false;
+            Manager.Input.isMoving = false;
+            dir = Vector2.zero;
             controller.ChangeState(PlayerState.Idle);
         }
     }
