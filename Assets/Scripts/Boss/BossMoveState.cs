@@ -6,7 +6,7 @@ using UnityEngine.Analytics;
 public class BossMoveState : BaseState
 {
     Transform playerTrans;
-    float moveSpeed = 3f;
+    float moveSpeed = 1f;
     float patternStartTime = 5f;
     float patternTimer = 0;
 

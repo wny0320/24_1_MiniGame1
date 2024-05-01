@@ -154,11 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a393b0e232ef9043837e4ac5a3ae9d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
   aimSpeed: 0
-=======
-  aimSpeed: 0.48
->>>>>>> Stashed changes
 --- !u!212 &63501807
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -461,13 +457,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a42436a8018d624a9e67b9e7cfbb76f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
   walkSpeed: 6
   ground: {fileID: 853118637}
-=======
-  walkSpeed: 5.32
-  ground: {fileID: 0}
->>>>>>> Stashed changes
 --- !u!50 &2033969756
 Rigidbody2D:
   serializedVersion: 4
