@@ -24,5 +24,9 @@ public enum BossState
 
 public enum Boss1Pattern
 {
-
+    Pattern1,
+    Pattern2,
+    Pattern3,
+    Pattern4,
+    Pattern5,
 }

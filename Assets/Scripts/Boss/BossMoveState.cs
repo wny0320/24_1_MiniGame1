@@ -1,30 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
 
 public class BossMoveState : BaseState
 {
-    Transform playerTrans;
-    float moveSpeed = 1f;
-    float patternStartTime = 5f;
-    float patternTimer = 0;
-
-    public BossMoveState(BaseController controller, Rigidbody2D rb = null, Animator animator = null)
-        : base(controller, rb, animator)
+    BossController bossController;
+    public BossMoveState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Stat stat = null)
+        : base(controller, rb, animator, stat)
     {
 
     }
 
     public override void OnStateEnter()
     {
+        bossController = controller as BossController;
         // 패턴 끝나고 움직임 상태로 들어오는 경우, 패턴 타이머를 다시 초기값으로 설정
-        patternTimer = 0;
+        bossController.patternTimer = 0;
     }
 
 
     public override void OnStateUpdate()
     {
+        GetBossController();
         BossMove();
         BossPatternTimeFunc();
     }
@@ -40,16 +37,29 @@ public class BossMoveState : BaseState
     }
     public void BossMove()
     {
-        if (playerTrans == null)
-            playerTrans = Manager.Game.Player.transform;
-        Vector3 playerDir = Vector3.Normalize((Vector2)playerTrans.position - rb.position);
+        if (bossController == null)
+            return;
+        if (bossController.playerTrans == null)
+            bossController.playerTrans = Manager.Game.Player.transform;
+        Vector3 playerDir = Vector3.Normalize((Vector2)bossController.playerTrans.position - rb.position);
         //Debug.Log(playerTrans.position);
-        rb.transform.position += playerDir * Time.deltaTime * moveSpeed;
+        rb.transform.position += playerDir * Time.deltaTime * bossController.moveSpeed;
     }
     public void BossPatternTimeFunc()
     {
-        patternTimer += Time.deltaTime;
-        if (patternTimer >= patternStartTime)
+        bossController.patternTimer += Time.deltaTime;
+        if (bossController.patternTimer >= bossController.patternTime)
             controller.ChangeState(BossState.Pattern);
+    }
+    public void GetBossController()
+    {
+        if(bossController == null)
+        {
+            if (controller == null)
+                return;
+            else
+                bossController = controller as BossController;
+        }
+        return;
     }
 }

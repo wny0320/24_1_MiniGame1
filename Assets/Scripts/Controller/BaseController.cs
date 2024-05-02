@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BaseController : MonoBehaviour
 {
+    protected Stat stat;
     protected Rigidbody2D rigid2D;
     protected Animator animator;
 

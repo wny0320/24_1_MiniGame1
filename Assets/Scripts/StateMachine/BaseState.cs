@@ -7,12 +7,14 @@ public abstract class BaseState
     protected BaseController controller { get; private set; }
     protected Rigidbody2D rb;
     protected Animator animator;
+    protected Stat stat;
 
-    public BaseState(BaseController controller, Rigidbody2D rb = null, Animator animator = null)
+    public BaseState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Stat stat = null)
     {
         this.controller = controller;
         this.rb = rb;
-        this.animator = animator;        
+        this.animator = animator;
+        this.stat = stat;
     }
 
     public abstract void OnStateEnter();
