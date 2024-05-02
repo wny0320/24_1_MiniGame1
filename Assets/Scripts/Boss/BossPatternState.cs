@@ -44,8 +44,7 @@ public class BossPatternState : BaseState
         // 패턴마다 조건이 충족되었는지 담고 있는 트리거 어레이
         bool[] patternTrigger = new bool[patternCount];
         #region 패턴 조건 조건문
-        if(playerDis > bossController.unitDis * 15f)
-            patternTrigger[0] = true;
+        patternTrigger[0] = false;
         if(playerDis < bossController.unitDis * 1.3f)
             patternTrigger[1] = true;
         if(playerDis < bossController.unitDis * 8f)

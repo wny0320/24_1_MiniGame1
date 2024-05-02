@@ -6,7 +6,6 @@ using UnityEngine;
 public class BossController : BaseController
 {
     public Transform playerTrans;
-    public float moveSpeed = 1f;
     /// <summary>
     /// 패턴이 시작되는 시간
     /// </summary>
@@ -18,7 +17,7 @@ public class BossController : BaseController
     /// <summary>
     /// 단위 거리
     /// </summary>
-    public float unitDis = 1f;
+    public float unitDis = 0.1f;
     private void Awake()
     {
         rigid2D = GetComponent<Rigidbody2D>();
@@ -26,6 +25,7 @@ public class BossController : BaseController
     void Start()
     {
         Application.targetFrameRate = 60;
+        stat = GetComponent<Stat>();
         InitStateMachine();
     }
 
@@ -43,13 +43,14 @@ public class BossController : BaseController
     private void InitStateMachine()
     {
         //상태 생성
-        BaseState MoveState = new BossMoveState(this, rigid2D, animator);
-        BaseState PatternState = new BossPatternState(this, rigid2D, animator);
+        BaseState MoveState = new BossMoveState(this, rigid2D, animator, stat);
+        BaseState PatternState = new BossPatternState(this, rigid2D, animator, stat);
+        BaseState Pattern1 = new Boss1Pattern1(this, rigid2D, animator, stat);
 
         //상태 추가
         states.Add(BossState.Move, MoveState);
         states.Add(BossState.Pattern, PatternState);
-        //states.Add(Boss1Pattern.Pattern1, );
+        states.Add(Boss1Pattern.Pattern1, Pattern1);
 
         //state machine 초기값
         stateMachine = new StateMachine(MoveState);

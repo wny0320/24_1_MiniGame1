@@ -25,7 +25,7 @@ public class Stat : MonoBehaviour
     public int Attack { get { return _attack; } set { _attack = value; } }
     public int Defense { get { return _defense; } set { _defense = value; } }
     public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
-    public float AttackSpeed { get { return _attackSpeed; } set { _moveSpeed = value; } }
+    public float AttackSpeed { get { return _attackSpeed; } set { _attackSpeed = value; } }
 
     private void Start()
     {
