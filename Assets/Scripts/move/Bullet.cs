@@ -3,23 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
-
+    Vector3 targetPos = Vector3.zero;
+    float bulletSpeed = 7f;
 
     // Update is called once per frame
     void Update()
     {
-        BulletDestroy();
-
+        //BulletDestroy();
+        BulletMove();
     }
 
 
-    void BulletDestroy()
+    //void BulletDestroy()
+    //{
+    //    if (transform.position.y > 9 || transform.position.x > 9)
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
+    private void BulletMove()
     {
-        if (transform.position.y > 9 || transform.position.x > 9)
-        {
-            Destroy(gameObject);
-        }
+        transform.position += targetPos * bulletSpeed * Time.deltaTime;
+    }
+    public void BulletDirSet(Vector3 _dir)
+    {
+        targetPos = _dir;
     }
 }

@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class BulletPoolManager : MonoBehaviour
 {
-    public static BulletPoolManager Instance;
+    //public static BulletPoolManager Instance;
+    const string PREFAB_PATH = "prefabs/bullet";
+    const string BULLET_POOL = "BulletPool";
 
     [SerializeField]
     private GameObject bulletPrefab;
@@ -12,24 +14,29 @@ public class BulletPoolManager : MonoBehaviour
 
     private Queue<GameObject> bulletPool = new Queue<GameObject>();
 
-    private void Awake()
+    public void OnAwake()
     {
-        Instance = this;
+        //Instance = this;
+        GetBulletPrefab();
         InitializeBulletPool();
     }
-
     private void InitializeBulletPool()
     {
         for (int i = 0; i < initialPoolSize; i++)
         {
             GameObject newBullet = Instantiate(bulletPrefab);
             // 부모를 지정해주는 코드, 이 코드가 없으면 하이라키창이 너무 지저분해짐
-            newBullet.transform.parent = transform;
+            newBullet.transform.parent = GameObject.Find(BULLET_POOL).transform;
             newBullet.SetActive(false);
             bulletPool.Enqueue(newBullet);
         }
     }
 
+    public void GetBulletPrefab()
+    {
+        if (bulletPrefab == null)
+            bulletPrefab = Resources.Load(PREFAB_PATH, typeof(GameObject)) as GameObject;
+    }
     public GameObject GetBullet()
     {
         if (bulletPool.Count > 0)
@@ -45,6 +52,12 @@ public class BulletPoolManager : MonoBehaviour
             newBullet.SetActive(true);
             return newBullet;
         }
+    }
+    public void BulletInit(GameObject _bullet, Vector3 _initPos, Vector3 _dir)
+    {
+        _bullet.transform.position = _initPos;
+        _bullet.TryGetComponent<Bullet>(out Bullet bulletComp);
+        bulletComp?.BulletDirSet(_dir);
     }
 
     public void ReturnBullet(GameObject bullet)

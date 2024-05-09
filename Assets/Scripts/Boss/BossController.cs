@@ -26,6 +26,7 @@ public class BossController : BaseController
     {
         Application.targetFrameRate = 60;
         stat = GetComponent<Stat>();
+        animator = GetComponent<Animator>();
         InitStateMachine();
     }
 

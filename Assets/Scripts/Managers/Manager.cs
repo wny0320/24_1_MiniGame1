@@ -12,15 +12,18 @@ public class Manager : MonoBehaviour
     GameManager _game = new GameManager();
     DataManager _data = new DataManager();
     InputManager _input = new InputManager();
+    BulletPoolManager _bullet = new BulletPoolManager();
 
     public static GameManager Game { get { return instance._game; } }
     public static DataManager Data { get { return instance._data; } }
     public static InputManager Input { get { return instance._input; } }
+    public static BulletPoolManager Bullet { get { return instance._bullet; } }
     #endregion
 
     private void Awake()
     {
         Init();
+        Bullet.OnAwake();
     }
     private void Start()
     {
@@ -29,7 +32,7 @@ public class Manager : MonoBehaviour
 
     private void Update()
     {
-        Input.OnUpdate();
+        Input.OnUpdate();        
     }
 
     private static void Init()

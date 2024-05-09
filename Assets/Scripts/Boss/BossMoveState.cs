@@ -7,11 +7,10 @@ public class BossMoveState : BaseState
     const string BOSS_MOVE = "isMoving";
     BossController bossController;
     bool pattern0Flag = false;
-    Transform transform;
     public BossMoveState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Stat stat = null, Transform transform = null)
         : base(controller, rb, animator, stat)
     {
-        this.transform = transform;
+
     }
 
     public override void OnStateEnter()
@@ -51,12 +50,13 @@ public class BossMoveState : BaseState
             rb.transform.position += playerDir * Time.deltaTime * bossController.stat.MoveSpeed * 2.5f;
         else
             rb.transform.position += playerDir * Time.deltaTime * bossController.stat.MoveSpeed;
+        rb.transform.position = BossClipping();
     }
     public void BossPatternTimeFunc()
     {
         bossController.patternTimer += Time.deltaTime;
         float playerDis = Vector3.Magnitude(bossController.playerTrans.position - rb.transform.position);
-        if (bossController.patternTimer >= bossController.patternTime)
+        if (bossController.patternTimer >= bossController.patternTime) // 현재 코드는 연속으로 대쉬 가능
         {
             if (playerDis > bossController.unitDis * 15 && Random.Range(0.0f, 1.0f) >= 0.5f)
             {
@@ -102,7 +102,9 @@ public class BossMoveState : BaseState
         /// 보스 클리핑
         /// </summary>
         /// <returns>Vector3, player의 clipping된 좌표</returns>
-
+        
+        Vector3 spriteSize = rb.GetComponent<SpriteRenderer>().sprite.rect.size;
+        Debug.Log(spriteSize);
         if (controller.ground == null) return Vector3.zero;
 
         Transform groundTrans = controller.ground.transform;
@@ -110,15 +112,18 @@ public class BossMoveState : BaseState
         Vector3 groundScale = groundTrans.lossyScale;
 
         // 스케일이 아닌 스프라이트 사이즈 고려를 해야할듯?
-        Vector3 playerPos = transform.position;
-        Vector3 playerScale = transform.lossyScale;
+        Vector3 bossPos = rb.transform.position;
+        Vector3 bossScale = rb.transform.lossyScale;
 
-        // 클립핑할 사각형의 왼쪽 아래점과 오른쪽 위의 점을 구함
-        Vector2 clipSquareLeftDown = groundPos - groundScale / 2 + playerScale / 2;
-        Vector2 clipSquareRightUp = groundPos + groundScale / 2 - playerScale / 2;
+        // 클립핑할 사각형의 왼쪽 아래점과 오른쪽 위의 점을 구하고 플레이어 rect 사이즈 고려
+        // 아래 코드는 스케일로 작성
+        //Vector2 clipSquareLeftDown = groundPos - groundScale / 2 + bossScale / 2;
+        //Vector2 clipSquareRightUp = groundPos + groundScale / 2 - bossScale / 2;
 
-        float clipedXPos = Mathf.Clamp(playerPos.x, clipSquareLeftDown.x, clipSquareRightUp.x);
-        float clipedYPos = Mathf.Clamp(playerPos.y, clipSquareLeftDown.y, clipSquareRightUp.y);
+        Vector2 clipSquareLeftDown = groundPos - groundScale / 2 + spriteSize / 2;
+        Vector2 clipSquareRightUp = groundPos + groundScale / 2 - spriteSize / 2;
+        float clipedXPos = Mathf.Clamp(bossPos.x, clipSquareLeftDown.x, clipSquareRightUp.x);
+        float clipedYPos = Mathf.Clamp(bossPos.y, clipSquareLeftDown.y, clipSquareRightUp.y);
         return new Vector3(clipedXPos, clipedYPos);
     }
 }

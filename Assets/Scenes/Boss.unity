@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat: {fileID: 0}
-  ground: {fileID: 0}
+  ground: {fileID: 610484285}
   playerTrans: {fileID: 0}
   patternTime: 5
   patternTimer: 0
