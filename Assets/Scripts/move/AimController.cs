@@ -1,14 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AimController : MonoBehaviour
 {
+    PlayerController playerController;
+    Vector3 inputPos;
+
+
     // 이렇게 쓰면 유니티 내부에서 데이터를 편집 할 수 있으며, Range는 해당 범위 내에서 실린더를 통해 조절 가능함
-    [SerializeField, Range(0,1)]
+    [SerializeField, Range(0, 1)]
     private float aimSpeed;
     private bool cursorLockFlag = false;
     private bool cursorVisibleFlag = false;
+
+
+    private void Start()
+    {
+        playerController = GetComponent<PlayerController>();
+    }
 
     private void mouseCursorTracking()
     {
@@ -17,8 +28,7 @@ public class AimController : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         mousePos.z = 0;
-        // 함수 내부에서만 쓸 변수가 아니라면 선언은 함수 외부에서 선언
-        //float aimSpeed = 0.8f; //  에임이 마우스 커서를 따라오는 속도
+       
         transform.position = Vector3.Lerp(transform.position, mousePos, aimSpeed);
     }
     /// <summary>
@@ -26,11 +36,11 @@ public class AimController : MonoBehaviour
     /// </summary>
     private void mouseCursorLock()
     {
-        if(Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
             cursorLockFlag = !cursorLockFlag;
-        if(cursorLockFlag == true)
+        if (cursorLockFlag == true)
             Cursor.lockState = CursorLockMode.Confined;
-        else if(cursorLockFlag == false)
+        else if (cursorLockFlag == false)
             Cursor.lockState = CursorLockMode.None;
     }
     /// <summary>
@@ -45,12 +55,7 @@ public class AimController : MonoBehaviour
         else if (cursorLockFlag == false)
             Cursor.visible = false;
     }
-    // 필요없는 이벤트 함수라면 꼭 없앨것
-    // Start is called before the first frame update
-    //void Start()
-    //{
-        
-    //}
+
 
     // Update is called once per frame
     void Update()
@@ -59,5 +64,16 @@ public class AimController : MonoBehaviour
         mouseCursorTracking();
         mouseCursorLock();
         mouseCursorVisible();
+
     }
+
+    /* void AimShoot()
+     {
+
+         if (Input.GetMouseButton(0))
+         {
+             inputPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+             playerController.Shoot(inputPos);
+         }
+     }*/
 }
