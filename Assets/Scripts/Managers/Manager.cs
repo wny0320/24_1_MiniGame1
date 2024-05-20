@@ -13,11 +13,13 @@ public class Manager : MonoBehaviour
     DataManager _data = new DataManager();
     InputManager _input = new InputManager();
     BulletPoolManager _bullet = new BulletPoolManager();
+    UIManager _ui = new UIManager();
 
     public static GameManager Game { get { return instance._game; } }
     public static DataManager Data { get { return instance._data; } }
     public static InputManager Input { get { return instance._input; } }
     public static BulletPoolManager Bullet { get { return instance._bullet; } }
+    public static UIManager UI { get { return instance._ui; } }
     #endregion
 
     private void Awake()

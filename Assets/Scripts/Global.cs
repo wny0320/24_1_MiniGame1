@@ -10,4 +10,9 @@ public static class Global
     //EX)
     public static Action ChangeWeapon_Q;
     public static Action ChangeWeapon_E;
+
+    public static Action CamShakeSmall;
+    public static Action CamShakeMedium;
+    public static Action CamShakeLarge;
+    public static Action<float, float, int> CamShakeCustom;
 }
