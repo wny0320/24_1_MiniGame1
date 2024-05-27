@@ -70,4 +70,8 @@ public class BossController : BaseController
         else
             return;
     }
+
+    public override void OnHit(float damage)
+    {
+    }
 }

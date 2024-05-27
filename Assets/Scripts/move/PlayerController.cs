@@ -102,5 +102,7 @@ public class PlayerController : BaseController
     //    }
     //}
 
-
+    public override void OnHit(float damage)
+    {
+    }
 }

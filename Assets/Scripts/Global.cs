@@ -15,4 +15,10 @@ public static class Global
     public static Action CamShakeMedium;
     public static Action CamShakeLarge;
     public static Action<float, float, int> CamShakeCustom;
+
+    //AssetCollector
+    public static SoundCollector Sound;
+
+    //SFX »ç¿ë¹ý : Global.sfx.Play(Global.Sound.testclip);
+    public static SoundManager sfx;
 }
