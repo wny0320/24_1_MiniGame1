@@ -45,9 +45,9 @@ public class BossPatternState : BaseState
         bool[] patternTrigger = new bool[patternCount];
         #region 패턴 조건 조건문
         patternTrigger[0] = false;
-        if(playerDis < bossController.unitDis * 1.3f)
+        if (playerDis < bossController.unitDis * 1.3f)
             patternTrigger[1] = true;
-        if(playerDis < bossController.unitDis * 8f)
+        if (playerDis < bossController.unitDis * 8f)
             patternTrigger[2] = true;
         if (playerDis > bossController.unitDis * 12f)
             patternTrigger[3] = true;
@@ -57,7 +57,7 @@ public class BossPatternState : BaseState
         #endregion
         #region 랜덤 패턴 State Change
         List<int> activeTriggerList = new List<int>();
-        for(int i = 0; i < patternCount; i++)
+        for (int i = 0; i < patternCount; i++)
         {
             if (patternTrigger[i] == true)
                 activeTriggerList.Add(i);
@@ -66,6 +66,7 @@ public class BossPatternState : BaseState
         int selectedIndex = activeTriggerList[n];
         string patternName = "Pattern" + selectedIndex;
         Boss1Pattern targetPattern = (Boss1Pattern)Enum.Parse(typeof(Boss1Pattern), patternName);
+        //현재 구현되지 않았으므로 Move상태로 설정중
         //controller.ChangeState(targetPattern);
         controller.ChangeState(BossState.Move);
         #endregion
@@ -81,36 +82,19 @@ public class BossPatternState : BaseState
         }
         return;
     }
-    //#region 패턴 함수들
-    //public async void Pattern0()
-    //{
-    //    Debug.Log("Pattern0 Invoked");
-    //    float timer = 0f;
-    //    float time = 2f;
-
-    //    await new Task(() =>
-    //    {
-    //        while(timer < time)
-    //        {
-    //            timer += Time.deltaTime;
-    //            rb.transform.position += playerDir * Time.deltaTime * moveSpeed * 2.5f;
-    //        }
-    //    });
-    //    //다음 패턴을 하게 값들을 초기화
-    //    InitPlayerData();
-    //}
+    #region 패턴 함수들
     //public async void Pattern1()
     //{
     //    Debug.Log("Pattern1 Invoked");
     //    float time = 0.8f;
     //    int number = 5;
-    //    await new Task (() =>
+    //    await new Task(() =>
     //    {
     //        new WaitForSeconds(1f);
     //    });
     //    await new Task(() =>
     //    {
-    //        for(int i = 0; i < number; i++)
+    //        for (int i = 0; i < number; i++)
     //        {
     //            new WaitForSeconds(time);
     //            //대검 찍기
@@ -142,7 +126,7 @@ public class BossPatternState : BaseState
     //    {
     //        new WaitForSeconds(3f);
     //    });
-    //    스테이트 바꾸기
+    //    //스테이트 바꾸기
     //    controller.ChangeState(BossState.Move);
     //}
     //public async void Pattern3()
@@ -155,7 +139,7 @@ public class BossPatternState : BaseState
     //    {
     //        Vector3 realPlayerPos = playerTrans.position;
     //        new WaitForSeconds(0.8f);
-    //        while(timer < time)
+    //        while (timer < time)
     //        {
     //            //병사 조준
     //        }
@@ -174,7 +158,7 @@ public class BossPatternState : BaseState
     //        float timer = 0f;
     //        float time = 1f;
     //        //점프
-    //        while(timer < time)
+    //        while (timer < time)
     //        {
     //            rb.transform.position += Vector3.up * Time.deltaTime;
     //        }
@@ -195,5 +179,5 @@ public class BossPatternState : BaseState
     //        // 30% 뎀감
     //    });
     //}
-    //#endregion
+    #endregion
 }

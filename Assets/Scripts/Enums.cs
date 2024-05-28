@@ -24,9 +24,18 @@ public enum BossState
 
 public enum Boss1Pattern
 {
+    Pattern0,
     Pattern1,
     Pattern2,
     Pattern3,
     Pattern4,
     Pattern5,
+}
+public enum NowBoss
+{
+    Null,
+    Boss1,
+    Boss2,
+    Boss3,
+    Boss4,
 }

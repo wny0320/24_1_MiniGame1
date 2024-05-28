@@ -97,85 +97,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uAD8C\uCD1D_0"
+      name: HandGun_0
       rect:
         serializedVersion: 2
-        x: 80
-        y: 260
-        width: 126
-        height: 200
+        x: 0
+        y: 250
+        width: 250
+        height: 250
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a84b9938f3c19ee49a92788db9f532b9
-      internalID: 1429599467
+      spriteID: 7c436064ecf5fcf4f8b4ef3df8dc956c
+      internalID: -308056247
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAD8C\uCD1D_1"
+      name: HandGun_1
       rect:
         serializedVersion: 2
-        x: 289
-        y: 260
-        width: 126
-        height: 200
+        x: 250
+        y: 250
+        width: 250
+        height: 250
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60f93c68a41bc2a43a76caa6587a4a2d
-      internalID: -889203282
+      spriteID: a7addd84022c7bd48b6d909efa4151a3
+      internalID: -1646068347
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAD8C\uCD1D_2"
+      name: HandGun_2
       rect:
         serializedVersion: 2
-        x: 74
-        y: 39
-        width: 138
-        height: 200
+        x: 0
+        y: 0
+        width: 250
+        height: 250
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a38e7498acad37643b38c83699dfbd9b
-      internalID: 224149110
+      spriteID: 35b6bfa250e48a44e82bd941d33a63d3
+      internalID: 1582235785
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAD8C\uCD1D_3"
+      name: HandGun_3
       rect:
         serializedVersion: 2
-        x: 289
-        y: 39
-        width: 138
-        height: 200
+        x: 250
+        y: 0
+        width: 250
+        height: 250
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9db9b85d0da7154eb17e34d2dd3c37e
-      internalID: 1736188502
+      spriteID: 8663c5f767cfbe44e81935c5dc93cb5a
+      internalID: 2020768581
       vertices: []
       indices: 
       edges: []
@@ -191,10 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\uAD8C\uCD1D_0": 1429599467
-      "\uAD8C\uCD1D_1": -889203282
-      "\uAD8C\uCD1D_2": 224149110
-      "\uAD8C\uCD1D_3": 1736188502
+      HandGun_0: -308056247
+      HandGun_1: -1646068347
+      HandGun_2: 1582235785
+      HandGun_3: 2020768581
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
