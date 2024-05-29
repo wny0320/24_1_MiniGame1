@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
-public class BossPatternState : BaseState
+public class Boss1PatternState : BaseState
 {
-    // 패턴의 갯수
-    int patternCount = 6;
+    // 패턴 코루틴들의 리스트
+    public List<Coroutine> patternList = new List<Coroutine>();
     BossController bossController;
-    public BossPatternState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Stat stat = null)
+    public Boss1PatternState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Stat stat = null)
         : base(controller, rb, animator, stat)
     {
 
@@ -15,7 +16,7 @@ public class BossPatternState : BaseState
 
     public override void OnStateEnter()
     {
-
+        //MethodBase.
     }
 
 
@@ -38,26 +39,27 @@ public class BossPatternState : BaseState
     {
         if (bossController == null)
             return;
-        if (bossController.playerTrans == null)
+        if (Manager.Game.Player.transform == null)
             return;
-        float playerDis = Vector3.Magnitude((Vector2)(bossController.playerTrans.position) - rb.position);
+        Transform playerTrans = Manager.Game.Player.transform;
+        float playerDis = Vector3.Magnitude((Vector2)(playerTrans.position) - rb.position);
         // 패턴마다 조건이 충족되었는지 담고 있는 트리거 어레이
-        bool[] patternTrigger = new bool[patternCount];
+        bool[] patternTrigger = new bool[patternList.Count];
         #region 패턴 조건 조건문
         patternTrigger[0] = false;
-        if (playerDis < bossController.unitDis * 1.3f)
+        if (playerDis < Manager.Pattern.unitDis * 1.3f)
             patternTrigger[1] = true;
-        if (playerDis < bossController.unitDis * 8f)
+        if (playerDis < Manager.Pattern.unitDis * 8f)
             patternTrigger[2] = true;
-        if (playerDis > bossController.unitDis * 12f)
+        if (playerDis > Manager.Pattern.unitDis * 12f)
             patternTrigger[3] = true;
-        if (playerDis < bossController.unitDis * 20f)
+        if (playerDis < Manager.Pattern.unitDis * 20f)
             patternTrigger[4] = true;
         //체력 관련 조건 아직
         #endregion
         #region 랜덤 패턴 State Change
         List<int> activeTriggerList = new List<int>();
-        for (int i = 0; i < patternCount; i++)
+        for (int i = 0; i < patternList.Count; i++)
         {
             if (patternTrigger[i] == true)
                 activeTriggerList.Add(i);
@@ -82,7 +84,11 @@ public class BossPatternState : BaseState
         }
         return;
     }
-    #region 패턴 함수들
+    public IEnumerator Pattern1()
+    {
+        yield return null;
+    }
+    #region 과거 패턴 함수들
     //public async void Pattern1()
     //{
     //    Debug.Log("Pattern1 Invoked");
