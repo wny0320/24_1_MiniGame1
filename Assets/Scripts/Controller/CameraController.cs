@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
         subPosition = offset + (transform.right * ((Input.mousePosition.x / Screen.width - 0.5f)) + 
             (transform.up * (Input.mousePosition.y / Screen.height - 0.5f))) * mouseRange;
 
-        transform.position = Vector3.Lerp(offset, subPosition, bias);
+        transform.localPosition = Vector3.Lerp(offset, subPosition, bias);
     }
 
     public void ShakeSmall() => Shake(0.03f, 0.2f, 25);
@@ -35,6 +35,7 @@ public class CameraController : MonoBehaviour
 
     public void Shake(float amount, float duration, int vibrato)
     {
+        transform.localPosition = offset;
         transform.DORewind();
         transform.DOShakePosition(duration, new Vector3(amount, amount, 0), vibrato).OnComplete(() => transform.localPosition = offset);
     }
