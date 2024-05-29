@@ -8,11 +8,11 @@ using UnityEngine;
 public class PlayerController : BaseController
 {
     [SerializeField, Range(1, 100)]
-    private float bulletSpeed;
+   // private float bulletSpeed;
     private Collider2D col;
     public GameObject Bullet;
 
-    //Vector3 inputPos;
+  
     
 
 
@@ -32,17 +32,11 @@ public class PlayerController : BaseController
     void Update()
     {
         stateMachine?.StateUpdateFunc();
-        //AimShoot();
+       
         Shoot();
 
     }
-    /*void Shoot(float angle)
-    {
-        // 총알 생성 및 발사
-        GameObject bullet = Instantiate(Bullet, gunTip.position, Quaternion.Euler(0, 0, angle));
-        Rigidbody2D bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
-        bulletRigidbody.velocity = gunTip.right * 10f; // 총구 방향으로 발사
-    }*/
+    
     void Shoot()
     {
         Vector3 inputPos;
@@ -91,16 +85,8 @@ public class PlayerController : BaseController
         stateMachine.SetState(states[(PlayerState)s]);
     }
 
-    //void AimShoot()
-    //{
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        Vector3 mouseScreenPos = Input.mousePosition;
-    //        mouseScreenPos.z = -Camera.main.transform.position.z; // 카메라와 마우스의 거리를 고려하여 z 좌표 설정
-    //        inputPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-    //        Shoot(inputPos);
-    //    }
-    //}
+
+   
 
     public override void OnHit(float damage)
     {

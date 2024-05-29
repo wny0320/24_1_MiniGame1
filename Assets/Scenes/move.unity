@@ -513,6 +513,7 @@ GameObject:
   - component: {fileID: 2033969756}
   - component: {fileID: 2033969755}
   - component: {fileID: 2033969759}
+  - component: {fileID: 2033969760}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -534,7 +535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat: {fileID: 0}
   ground: {fileID: 853118637}
-  bulletSpeed: 36.5
+  col: {fileID: 0}
   Bullet: {fileID: 6723810013777600723, guid: f236fa00eb31b334dab3235334f9259d, type: 3}
 --- !u!50 &2033969756
 Rigidbody2D:
@@ -675,6 +676,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2033969760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033969754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 260962972fb412246b4b97b45267b9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -3,32 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using UnityEngine;
+
+using UnityEngine;
+
+using UnityEngine;
+
 public class Bullet : MonoBehaviour
 {
     Vector3 targetPos = Vector3.zero;
-    float bulletSpeed = 7f;
+    private float bulletSpeed; // 총알 속도
+    private static float currentBulletSpeed = 10f; // 현재 총알 속도 (초기값 10f)
 
-    // Update is called once per frame
+    void Start()
+    {
+        bulletSpeed = currentBulletSpeed; // 시작 시 현재 총알 속도로 초기화
+    }
+
     void Update()
     {
-        //BulletDestroy();
+        ChangeGun();
         BulletMove();
     }
 
-
-    //void BulletDestroy()
-    //{
-    //    if (transform.position.y > 9 || transform.position.x > 9)
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
     private void BulletMove()
     {
-        transform.position += targetPos * bulletSpeed * Time.deltaTime;
+        transform.position += targetPos * Time.deltaTime * bulletSpeed;
     }
+
     public void BulletDirSet(Vector3 _dir)
     {
         targetPos = _dir;
+    }
+
+    private void ChangeGun()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            BulletSpeed(); // 총알 속도 전환
+        }
+    }
+
+    private void BulletSpeed()
+    {
+        currentBulletSpeed = currentBulletSpeed == 10f ? 100f : 10f; // 10f와 100f 사이에서 전환
     }
 }

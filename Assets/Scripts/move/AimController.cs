@@ -6,6 +6,7 @@ using UnityEngine;
 public class AimController : MonoBehaviour
 {
     PlayerController playerController;
+    Bullet bullet;
     Vector3 inputPos;
 
 
@@ -19,6 +20,7 @@ public class AimController : MonoBehaviour
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
+        bullet = GetComponent<Bullet>();    
     }
 
     private void mouseCursorTracking()
@@ -57,23 +59,28 @@ public class AimController : MonoBehaviour
     }
 
 
-    // Update is called once per frame
+   
     void Update()
     {
         //최대한 업데이트 내부에서 코드짜지 말고 함수로 외부로 뺄 것
         mouseCursorTracking();
         mouseCursorLock();
         mouseCursorVisible();
+        ChangeGun();
 
     }
+    private void ChangeGun()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Aimspeed(); // 총알 속도 전환
+        }
+    }
 
-    /* void AimShoot()
-     {
+    public void Aimspeed()
+    {
+        aimSpeed = 1f;
+    }
 
-         if (Input.GetMouseButton(0))
-         {
-             inputPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-             playerController.Shoot(inputPos);
-         }
-     }*/
+   
 }
