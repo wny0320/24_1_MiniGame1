@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
     private static Manager instance = null;
     public static Manager Instance { get { Init(); return instance; } }
+    public Coroutine nowPattern = null;
 
     #region Managers
     GameManager _game = new GameManager();
@@ -14,14 +16,12 @@ public class Manager : MonoBehaviour
     InputManager _input = new InputManager();
     BulletPoolManager _bullet = new BulletPoolManager();
     UIManager _ui = new UIManager();
-    BossPatternManager _pattern = new BossPatternManager();
 
     public static GameManager Game { get { return instance._game; } }
     public static DataManager Data { get { return instance._data; } }
     public static InputManager Input { get { return instance._input; } }
     public static BulletPoolManager Bullet { get { return instance._bullet; } }
     public static UIManager UI { get { return instance._ui; } }
-    public static BossPatternManager Pattern { get {  return instance._pattern; } }
     #endregion
 
     private void Awake()
@@ -52,6 +52,15 @@ public class Manager : MonoBehaviour
 
             DontDestroyOnLoad(go);
             instance = go.GetComponent<Manager>();
+        }
+    }
+
+    public void InvokePattern(object _target, MethodInfo _method)
+    {
+        if(nowPattern == null)
+        {
+            IEnumerator co = (IEnumerator)_method.Invoke(_target, _method.GetParameters());
+            nowPattern = StartCoroutine(co);
         }
     }
 }

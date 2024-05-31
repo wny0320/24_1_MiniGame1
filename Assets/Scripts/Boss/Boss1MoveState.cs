@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossMoveState : BaseState
+public class Boss1MoveState : BaseState
 {
     const string BOSS_MOVE = "isMoving";
     BossController bossController;
     bool pattern0Flag = false;
-    public BossMoveState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Stat stat = null, Transform transform = null)
+    public Boss1MoveState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Stat stat = null, Transform transform = null)
         : base(controller, rb, animator, stat)
     {
 
@@ -18,7 +18,7 @@ public class BossMoveState : BaseState
         animator.SetBool(BOSS_MOVE, true);
         bossController = controller as BossController;
         // 패턴 끝나고 움직임 상태로 들어오는 경우, 패턴 타이머를 다시 초기값으로 설정
-        Manager.Pattern.patternTimer = 0;
+        bossController.patternTimer = 0;
     }
 
 
@@ -55,15 +55,26 @@ public class BossMoveState : BaseState
     }
     public void BossPatternTimeFunc()
     {
-        Manager.Pattern.patternTimer += Time.deltaTime;
+        //현재 패턴이 아직 진행되고 있다면 패턴 시간 값을 증가시키지 않음
+        if (Manager.Instance.nowPattern != null)
+            return;
+        bossController.patternTimer += Time.deltaTime;
         Transform playerTrans = Manager.Game.Player.transform;
         float playerDis = Vector3.Magnitude(playerTrans.position - rb.transform.position);
-        if (Manager.Pattern.patternTimer >= Manager.Pattern.patternTime) // 현재 코드는 연속으로 대쉬 가능
+        // 보스 컨트롤러의 타임 에더 함수가 작동된 경우엔 시간을 한번 빼준다
+        if (bossController.timeAddFlag)
         {
-            if (playerDis > Manager.Pattern.unitDis * 15 && Random.Range(0.0f, 1.0f) >= 0.5f)
+            bossController.patternTime -= bossController.timeAdd;
+            bossController.timeAddFlag = false;
+        }
+        // 1페이즈 일 경우 기존 패턴 타임 비교, 2페이즈 일 경우 패턴 타임 배율을 곱해서 비교
+        if ((!bossController.phase2Flag && bossController.patternTimer >= bossController.patternTime) || 
+            (bossController.phase2Flag && bossController.patternTimer/ bossController.phase2TimeMul >= bossController.patternTime)) // 현재 코드는 연속으로 대쉬 가능
+        {
+            if (playerDis > bossController.unitDis * 15 && Random.Range(0.0f, 1.0f) >= 0.5f)
             {
                 pattern0Flag = true;
-                Manager.Pattern.patternTimer -= 1f;
+                bossController.patternTimer -= 1f;
             }
             else
             {

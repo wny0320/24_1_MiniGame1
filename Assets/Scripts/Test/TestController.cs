@@ -16,7 +16,7 @@ public class TestController : BaseController
         stat = GetComponent<Stat>();
         animator = GetComponent<Animator>();
         InitStateMachine();
-        StartCoroutine(testState.TestCo()); // 제대로 작동함
+        //StartCoroutine(testState.TestCo()); // 제대로 작동함
     }
 
     void Update()
