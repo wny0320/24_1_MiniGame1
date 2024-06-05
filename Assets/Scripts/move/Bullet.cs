@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using UnityEngine;
-
-using UnityEngine;
-
-using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     Vector3 targetPos = Vector3.zero;
+    public enum eType
+    {
+        Gun1,Gun2
+    }
+    public eType type;
+    GunChange gun;
     private float bulletSpeed; // 총알 속도
     private static float currentBulletSpeed = 10f; // 현재 총알 속도 (초기값 10f)
 
@@ -22,7 +23,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        ChangeGun();
+       // ChangeGun();
         BulletMove();
     }
 
@@ -36,16 +37,7 @@ public class Bullet : MonoBehaviour
         targetPos = _dir;
     }
 
-    private void ChangeGun()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            BulletSpeed(); // 총알 속도 전환
-        }
-    }
+   
 
-    private void BulletSpeed()
-    {
-        currentBulletSpeed = currentBulletSpeed == 10f ? 100f : 10f; // 10f와 100f 사이에서 전환
-    }
+    
 }

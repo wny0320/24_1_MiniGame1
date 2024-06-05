@@ -79,7 +79,7 @@ public class AimController : MonoBehaviour
 
     public void Aimspeed()
     {
-        currentBulletSpeed = currentBulletSpeed == 10f ? 100f : 10f; // 10f와 100f 사이에서 전환
+        //currentBulletSpeed = currentBulletSpeed == 10f ? 100f : 10f; // 10f와 100f 사이에서 전환
     }
 
    

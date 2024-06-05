@@ -8,28 +8,36 @@ public class GunChange : MonoBehaviour
     AimController aimcontroller;
 
 
+
+
     private void Start()
     {
         aimcontroller = GetComponent<AimController>();
         bullet = GetComponent<Bullet>();    
     }
 
-  /*  private void Update()
+      private void Update()
+      {
+          ChangeGun();
+      }
+
+
+
+    private void ChangeGun()
     {
-        Change();
-    }*/
-
-
-
-   /* private void Change()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            bullet.SetBulletSpeed(100f);
-            aimcontroller.Gun1();
-            Debug.Log("asd");
+            if (this.bullet.type == Bullet.eType.Gun1)
+            {
+                
+                //무기교체
+            }
+            else if(this.bullet.type == Bullet.eType.Gun2)
+            {
+                //"무기교체"
+            }  
         }
-    }*/
+    }
 
 
 }
