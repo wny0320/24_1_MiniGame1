@@ -66,21 +66,12 @@ public class AimController : MonoBehaviour
         mouseCursorTracking();
         mouseCursorLock();
         mouseCursorVisible();
-        ChangeGun();
+      
 
     }
-    private void ChangeGun()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Aimspeed(); // 총알 속도 전환
-        }
-    }
+    
 
-    public void Aimspeed()
-    {
-        //currentBulletSpeed = currentBulletSpeed == 10f ? 100f : 10f; // 10f와 100f 사이에서 전환
-    }
+    
 
    
 }

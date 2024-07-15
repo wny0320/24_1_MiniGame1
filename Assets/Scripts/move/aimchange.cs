@@ -15,26 +15,25 @@ public class aimchange : MonoBehaviour
     
     void Start()
     {
-        totalWeapons = weaponHolder.transform.childCount;   
-        guns = new GameObject[totalWeapons];   
-        
-        for (int i=0; i < totalWeapons; i++)
-        {
-            guns[i] = weaponHolder.transform.GetChild(i).gameObject;
-            guns[i].SetActive(false);
-        }
-
-        guns[0].SetActive(true);
-        currentGun = guns[0];
-        currentWeaponindex = 0;
+        GunSetting();
     }
 
-    // Update is called once per frame
+   
+   
+    
     void Update()
+    {
+        GunChange();
+    }
+
+   
+    
+    
+    public void GunChange()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (currentWeaponindex < totalWeapons-1)
+            if (currentWeaponindex < totalWeapons - 1)
             {
                 guns[currentWeaponindex].SetActive(false);
                 currentWeaponindex++;
@@ -47,5 +46,24 @@ public class aimchange : MonoBehaviour
                 guns[currentWeaponindex].SetActive(true);
             }
         }
+    }
+
+   
+    
+    
+    public void GunSetting()
+    {
+        totalWeapons = weaponHolder.transform.childCount;
+        guns = new GameObject[totalWeapons];
+
+        for (int i = 0; i < totalWeapons; i++)
+        {
+            guns[i] = weaponHolder.transform.GetChild(i).gameObject;
+            guns[i].SetActive(false);
+        }
+
+        guns[0].SetActive(true);
+        currentGun = guns[0];
+        currentWeaponindex = 0;
     }
 }
