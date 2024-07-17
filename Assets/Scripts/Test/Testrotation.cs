@@ -28,7 +28,7 @@ public class RotateOnTab : MonoBehaviour
             {
                 // 회전 초과량 보정
                 float overshoot = currentRotation - targetRotation;
-                transform.Rotate(0, 0, -overshoot);
+                transform.Rotate(0, 0, rotationSpeed > 0 ? -overshoot : overshoot);
                 isRotating = false; // 회전 중 상태 해제
             }
         }
