@@ -12,7 +12,6 @@ public class Bullet : MonoBehaviour
         Gun1,Gun2
     }
     public eType type;
-    GunChange gun;
     private float bulletSpeed; // 총알 속도
     private static float currentBulletSpeed = 10f; // 현재 총알 속도 (초기값 10f)
 

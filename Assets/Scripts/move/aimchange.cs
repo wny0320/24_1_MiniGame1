@@ -38,12 +38,14 @@ public class aimchange : MonoBehaviour
                 guns[currentWeaponindex].SetActive(false);
                 currentWeaponindex++;
                 guns[currentWeaponindex].SetActive(true);
+                currentGun = guns[currentWeaponindex];
             }
             else
             {
                 guns[currentWeaponindex].SetActive(false);
                 currentWeaponindex = 0;
                 guns[currentWeaponindex].SetActive(true);
+                currentGun = guns[currentWeaponindex];
             }
         }
     }
