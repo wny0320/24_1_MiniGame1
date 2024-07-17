@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Boss1MoveState : BaseState
 {
-    const string BOSS_MOVE = "isMoving";
+    const string BOSS_MOVE = "MoveFlag";
     BossController bossController;
     bool pattern0Flag = false;
     public Boss1MoveState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Stat stat = null, Transform transform = null)
@@ -15,7 +17,6 @@ public class Boss1MoveState : BaseState
 
     public override void OnStateEnter()
     {
-        animator.SetBool(BOSS_MOVE, true);
         bossController = controller as BossController;
         // 패턴 끝나고 움직임 상태로 들어오는 경우, 패턴 타이머를 다시 초기값으로 설정
         bossController.patternTimer = 0;
@@ -36,7 +37,7 @@ public class Boss1MoveState : BaseState
 
     public override void OnStateExit()
     {
-        animator.SetBool(BOSS_MOVE, false);
+
     }
     public void BossMove()
     {
@@ -44,14 +45,22 @@ public class Boss1MoveState : BaseState
             return;
         if (Manager.Game.Player.transform == null)
             return;
+        Debug.Log("BossMove Invoked");
         Transform playerTrans = Manager.Game.Player.transform;
         Vector3 playerDir = Vector3.Normalize((Vector2)playerTrans.position - rb.position);
-        //Debug.Log(playerTrans.position);
+        Vector3 playerDis = (Vector2)playerTrans.position - rb.position;
+        if (playerDis.magnitude < bossController.unitDis)
+        {
+            animator.SetBool(BOSS_MOVE, false);
+            return;
+        }
+        Debug.Log("Boss Move On");
+        animator.SetBool(BOSS_MOVE, true);
         if(pattern0Flag == true)
             rb.transform.position += playerDir * Time.deltaTime * bossController.stat.MoveSpeed * 2.5f;
         else
             rb.transform.position += playerDir * Time.deltaTime * bossController.stat.MoveSpeed;
-        rb.transform.position = BossClipping();
+        //rb.transform.position = BossClipping();
     }
     public void BossPatternTimeFunc()
     {
@@ -79,6 +88,7 @@ public class Boss1MoveState : BaseState
             else
             {
                 pattern0Flag = false;
+                Debug.Log("pattern time = " + bossController.patternTimer);
                 controller.ChangeState(BossState.Pattern);
             }
             //아래는 거리 상관없이 랜덤으로 구현했던것
