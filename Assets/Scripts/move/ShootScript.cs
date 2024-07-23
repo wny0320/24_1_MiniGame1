@@ -42,7 +42,7 @@ public class ShootScript : MonoBehaviour
 
     }
 
-    void FaceMouse()
+    void FaceMouse()   // 총이 마우스 포인터를 따라서 움직이도록
     {
         /*Gun.transform.right = direction;*/
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -54,7 +54,7 @@ public class ShootScript : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, rotZ);
     }
 
-    void FireRateCalc()
+    void FireRateCalc() // 총 연사 속도를 위한 함수
     {
         if (currentFireRate > 0)
         {
@@ -71,6 +71,11 @@ public class ShootScript : MonoBehaviour
                 currentFireRate = currentGun.fireRate;
                 Shoot();
             }
+            else if(currentGun.BulletCount <= 0)
+            {
+                Invoke("Reload",currentGun.ReloadSpeed);
+            }
+            
         }
 
     }
@@ -89,6 +94,15 @@ public class ShootScript : MonoBehaviour
             Manager.Bullet.BulletInit(nowBullet, transform.position, inputPos);
         }
 
+    }
+    void Reload()
+    {
+        if (currentGun.BulletCount <= 0)
+        {
+            currentGun.BulletCount += currentGun.ReloadBullet;
+            Debug.Log("재장전");
+        }
+        
     }
 
 }

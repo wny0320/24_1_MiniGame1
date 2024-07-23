@@ -24,4 +24,10 @@ public class GunType : MonoBehaviour
 
     [Header("총알 스피드")]
     public float speed;
+
+    [Header("재장전 갯수")]
+    public int ReloadBullet;
+
+    [Header("재장전 속도")]
+    public float ReloadSpeed;
 }
