@@ -39,3 +39,9 @@ public enum NowBoss
     Boss3,
     Boss4,
 }
+
+public enum SceneType
+{
+    Main = 0,
+    
+}
