@@ -9,6 +9,11 @@ public class AimController : MonoBehaviour
     Bullet bullet;
     Vector3 inputPos;
 
+    [SerializeField]
+    private Transform aimObject;
+
+    public Transform AimObject => aimObject; // aimObject의 위치를 공개하는 프로퍼티
+
 
     // 이렇게 쓰면 유니티 내부에서 데이터를 편집 할 수 있으며, Range는 해당 범위 내에서 실린더를 통해 조절 가능함
     [SerializeField, Range(0, 1)]

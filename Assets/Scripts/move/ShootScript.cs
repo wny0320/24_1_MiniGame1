@@ -14,6 +14,9 @@ public class ShootScript : MonoBehaviour
 
     public GameObject Bullet;
 
+    [SerializeField]
+    public AimController aimController; // 에임 위치 
+
     public Transform ShootPoint;
 
     [Header("현재 장착된 총")]
@@ -29,13 +32,13 @@ public class ShootScript : MonoBehaviour
     {
         currentFireRate = 0;
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        direction = mousePos - (Vector2)Gun.position;*/
+        
         FaceMouse();
         FireRateCalc();
         TryFire();
@@ -44,7 +47,7 @@ public class ShootScript : MonoBehaviour
 
     void FaceMouse()   // 총이 마우스 포인터를 따라서 움직이도록
     {
-        /*Gun.transform.right = direction;*/
+       
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
         Vector3 rotation = mousePos - transform.position; ;
@@ -66,7 +69,7 @@ public class ShootScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (currentFireRate <= 0 && currentGun.BulletCount > 0)
+            if (currentFireRate <= 0 && currentGun.BulletCount > 0)  // 연사속도에 맞게 총알이 있을때만 총알 발사
             {
                 currentFireRate = currentGun.fireRate;
                 Shoot();
@@ -82,16 +85,17 @@ public class ShootScript : MonoBehaviour
 
     void Shoot()
     {
-        Vector3 inputPos;
+        //Vector3 inputPos;
         if (Input.GetMouseButtonDown(0))
         {
-            currentGun.BulletCount--;
-            Vector3 mouseScreenPos = Input.mousePosition;
-            mouseScreenPos.z = -Camera.main.transform.position.z; // 카메라와 마우스의 거리를 고려하여 z 좌표 설정
-            inputPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+            currentGun.BulletCount--;                           // 총알 갯수 카운트
+
+            // 에임 위치로 총알 발사
+            Vector3 aimPosition = aimController.AimObject.position;
+            Vector3 shootDirection = Vector3.Normalize(aimPosition - transform.position);
+
             GameObject nowBullet = Manager.Bullet.GetBullet();
-            inputPos = Vector3.Normalize(inputPos - transform.position); // 상대적 위치를 정규화
-            Manager.Bullet.BulletInit(nowBullet, transform.position, inputPos);
+            Manager.Bullet.BulletInit(nowBullet, transform.position, shootDirection);
         }
 
     }
