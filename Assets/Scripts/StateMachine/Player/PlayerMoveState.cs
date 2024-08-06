@@ -9,6 +9,7 @@ public class PlayerMoveState : BaseState
     const string Y_DIR = "yDir";
 
     Transform transform;
+    PlayerController pc = null;
 
     Vector2 dir = Vector2.zero;
     float inputX = 0f;
@@ -18,6 +19,8 @@ public class PlayerMoveState : BaseState
     public PlayerMoveState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Transform transform = null)
         : base(controller, rb, animator)
     {
+        pc = controller as PlayerController;
+
         this.transform = transform;
 
         Manager.Input.PlayerMove -= PlayerMove;
@@ -41,7 +44,8 @@ public class PlayerMoveState : BaseState
         transform.Translate(dir * Time.deltaTime * walkSpeed);  // 키보드에 따른 방향으로 이동속도 만큼 이동
         transform.position = PlayerClipping();
 
-        if (Input.GetKeyDown(KeyCode.Space)) Manager.Input.PlayerDodge.Invoke(dir); 
+        if (Input.GetKeyDown(KeyCode.LeftShift)) Manager.Input.PlayerDodge.Invoke(dir);
+        if (Input.GetKeyDown(KeyCode.Space)) pc.Parrying();
     }
 
     public override void OnFixedUpdate()
@@ -58,18 +62,15 @@ public class PlayerMoveState : BaseState
 
     private void PlayerMove()
     {
-        if (Manager.Input.isDodging || Manager.Input.isParrying) return;
-
-        Manager.Input.isMoving = true;
+        if (pc.isDodging || pc.isParrying) return;
 
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
 
         if (inputX == 0 && inputY == 0)
         {
-            Manager.Input.isMoving = false;
             dir = Vector2.zero;
-            controller.ChangeState(PlayerState.Idle);
+            //controller.ChangeState(PlayerState.Idle);
         }
     }
 

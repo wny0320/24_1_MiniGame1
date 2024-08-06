@@ -5,6 +5,8 @@ using UnityEngine.Windows;
 
 public class PlayerDodgeState : BaseState
 {
+    PlayerController pc = null;
+
     const string PLAYER_DODGING = "isDodging";
     const string X_DIR = "xDir";
     const string Y_DIR = "yDir";
@@ -19,6 +21,8 @@ public class PlayerDodgeState : BaseState
     public PlayerDodgeState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Collider2D collider = null)
         : base(controller, rb, animator)
     {
+        pc = controller as PlayerController;
+
         col = collider;
         Manager.Input.PlayerDodge -= PlayerDodge;
         Manager.Input.PlayerDodge += PlayerDodge;
@@ -50,17 +54,17 @@ public class PlayerDodgeState : BaseState
     public override void OnStateExit()
     {
         rb.velocity = Vector2.zero;
-        Manager.Input.isDodging = false;
+        pc.isDodging = false;
         col.enabled = true;
         animator.SetBool(PLAYER_DODGING, false);
     }
 
     private void PlayerDodge(Vector2 dir)
     {
-        if (Manager.Input.isDodging) { Debug.Log("isDodging"); return; }
+        if (pc.isDodging) { Debug.Log("isDodging"); return; }
 
         this.dir = dir;
-        Manager.Input.isDodging = true;
+        pc.isDodging = true;
         controller.ChangeState(PlayerState.Dodge);
     }
 }

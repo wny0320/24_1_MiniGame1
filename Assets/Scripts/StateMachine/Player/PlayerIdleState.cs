@@ -18,7 +18,7 @@ public class PlayerIdleState : BaseState
 
     public override void OnStateUpdate()
     {
-        if (Manager.Input.isMoving) controller.ChangeState(PlayerState.Move);
+        // (Manager.Input.isMoving) controller.ChangeState(PlayerState.Move);
     }
 
     public override void OnFixedUpdate()
