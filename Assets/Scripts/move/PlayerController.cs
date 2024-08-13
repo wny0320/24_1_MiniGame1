@@ -12,6 +12,8 @@ public class PlayerController : BaseController, IReceiveAttack
     private Collider2D col;
     public GameObject Bullet;
 
+
+
     public bool isDodging = false;
     public bool isParrying = false;
     public bool canParrying = true;
@@ -31,31 +33,20 @@ public class PlayerController : BaseController, IReceiveAttack
         InitStateMachine();
 
         Manager.Game.Player = gameObject;
+
+
     }
 
     void Update()
     {
         stateMachine?.StateUpdateFunc();
+        
        
-        //Shoot();
+    
 
     }
     
-   /* void Shoot()
-    {
-        Vector3 inputPos;
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 mouseScreenPos = Input.mousePosition;
-            mouseScreenPos.z = -Camera.main.transform.position.z; // 카메라와 마우스의 거리를 고려하여 z 좌표 설정
-            inputPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-            GameObject nowBullet = Manager.Bullet.GetBullet();
-            inputPos = Vector3.Normalize(inputPos - transform.position); // 상대적 위치를 정규화
-            Manager.Bullet.BulletInit(nowBullet,transform.position,inputPos);
-        }
-        
-    }*/
-
+   
     private void FixedUpdate()
     {
         stateMachine?.StateFixtedUpdateFunc();
@@ -111,4 +102,7 @@ public class PlayerController : BaseController, IReceiveAttack
 
         }
     }
+
+
+    
 }

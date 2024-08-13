@@ -30,4 +30,10 @@ public class GunType : MonoBehaviour
 
     [Header("재장전 속도")]
     public float ReloadSpeed;
+
+    [Header("이동속도 디버프")]
+    public float SpeedDebuff;
+
+    [Header("공격력")]
+    public float Power;
 }
