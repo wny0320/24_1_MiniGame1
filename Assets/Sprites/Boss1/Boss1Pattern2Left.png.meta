@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e62472f833cf636498572c5814cd0494
+guid: 015588bf970cc9945ac9ea1cb4ce9a3c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 2048
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -95,7 +95,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Boss1Pattern2Left_0
+      rect:
+        serializedVersion: 2
+        x: 2637
+        y: 8231
+        width: 5164
+        height: 5749
+      alignment: 9
+      pivot: {x: 0.67796785, y: 0.43519253}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24a9657286557734aba005c8cdaab851
+      internalID: 114711724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boss1Pattern2Left_1
+      rect:
+        serializedVersion: 2
+        x: 9457
+        y: 8231
+        width: 6492
+        height: 5749
+      alignment: 9
+      pivot: {x: 0.74486554, y: 0.43519253}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5572c811e019df40a33d76300530dc8
+      internalID: -1818524766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boss1Pattern2Left_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 871
+        width: 7801
+        height: 5758
+      alignment: 9
+      pivot: {x: 0.78337777, y: 0.43529388}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cea54762fd6721344abb60da360fb26d
+      internalID: -395722652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boss1Pattern2Left_3
+      rect:
+        serializedVersion: 2
+        x: 15996
+        y: 5285
+        width: 4
+        height: 755
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fe6963c6f057b9478af7fd1a302e99b
+      internalID: -1414649070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +190,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Boss1Pattern2Left_0: 114711724
+      Boss1Pattern2Left_1: -1818524766
+      Boss1Pattern2Left_2: -395722652
+      Boss1Pattern2Left_3: -1414649070
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

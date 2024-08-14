@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 012eec71b8c881f4f81f48014cc4c1c9
+guid: 0330b9336494c014cb9a2fc04dc350ed
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,76 +97,76 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boss1_0
+      name: Boss1Pattern2UpDown_0
       rect:
         serializedVersion: 2
-        x: 735
-        y: 5039
-        width: 3778
-        height: 4189
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 8230
+        width: 3980
+        height: 6040
+      alignment: 9
+      pivot: {x: 0.5811309, y: 0.46298894}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbb10e677871bef47bc7a015ab0071f2
-      internalID: -1344322995
+      spriteID: 81ad6b3f66fca92468d3108db1570fb7
+      internalID: -204926373
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss1_1
+      name: Boss1Pattern2UpDown_1
       rect:
         serializedVersion: 2
-        x: 5390
-        y: 5039
-        width: 3784
-        height: 4188
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 5785
+        y: 8255
+        width: 3695
+        height: 5750
+      alignment: 9
+      pivot: {x: 0.5134444, y: 0.430884}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9899e0cffb5cc044b8825a97d428899
-      internalID: -1792204033
+      spriteID: 8fb0c465001b56f458b03ab0ea20c425
+      internalID: -90983881
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss1_2
+      name: Boss1Pattern2UpDown_2
       rect:
         serializedVersion: 2
-        x: 1103
-        y: 387
-        width: 3042
-        height: 4340
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 11223
+        y: 8230
+        width: 4140
+        height: 6040
+      alignment: 9
+      pivot: {x: 0.41600502, y: 0.46298894}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37ebbbbd8d1410a48b7b2b48323497de
-      internalID: -712504164
+      spriteID: 0421f94e17f2bb341bc5fadda3e2855b
+      internalID: -244968218
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boss1_3
+      name: Boss1Pattern2UpDown_3
       rect:
         serializedVersion: 2
-        x: 5956
-        y: 387
-        width: 3042
-        height: 4335
+        x: 15996
+        y: 11902
+        width: 4
+        height: 461
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,8 +174,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a993eaf2c584934bbc9601cbc1bc496
-      internalID: 1773032558
+      spriteID: 0fb84713a46c6f5409deb992ed05e201
+      internalID: 1236558564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boss1Pattern2UpDown_4
+      rect:
+        serializedVersion: 2
+        x: 957
+        y: 1020
+        width: 3990
+        height: 6046
+      alignment: 9
+      pivot: {x: 0.36927065, y: 0.4630257}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1daad8b34b2fb4c40b138876e37e1034
+      internalID: -621831713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boss1Pattern2UpDown_5
+      rect:
+        serializedVersion: 2
+        x: 6160
+        y: 1020
+        width: 3695
+        height: 5750
+      alignment: 9
+      pivot: {x: 0.4462222, y: 0.43520376}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ec403204178a1e41a0a781c736aa0d7
+      internalID: -1795526167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boss1Pattern2UpDown_6
+      rect:
+        serializedVersion: 2
+        x: 10863
+        y: 1020
+        width: 4133
+        height: 6046
+      alignment: 9
+      pivot: {x: 0.5721177, y: 0.45891744}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5bd2eb2bef6fa648b7fe76d52e9786a
+      internalID: 1915498978
       vertices: []
       indices: 
       edges: []
@@ -191,10 +254,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Boss1_0: -1344322995
-      Boss1_1: -1792204033
-      Boss1_2: -712504164
-      Boss1_3: 1773032558
+      Boss1Pattern2UpDown_0: -204926373
+      Boss1Pattern2UpDown_1: -90983881
+      Boss1Pattern2UpDown_2: -244968218
+      Boss1Pattern2UpDown_3: 1236558564
+      Boss1Pattern2UpDown_4: -621831713
+      Boss1Pattern2UpDown_5: -1795526167
+      Boss1Pattern2UpDown_6: 1915498978
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

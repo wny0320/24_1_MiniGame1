@@ -179,6 +179,7 @@ public class Boss1PatternState : BaseState
         // 플레이어의 이속을 받아오기 위해 스탯을 가져옴
         Stat playerStat = Manager.Game.Player.GetComponent<Stat>();
         Vector3 targetPos = Manager.Game.Player.GetComponent<Transform>().position;
+        Debug.Log(playerStat);
         while (true)
         {
             if (downTime > downTimer)
