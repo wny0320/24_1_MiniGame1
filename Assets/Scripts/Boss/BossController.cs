@@ -24,6 +24,8 @@ public class BossController : BaseController
     public float unitDis = 0.1f;
     public const string X_DIR = "xDir";
     public const string Y_DIR = "yDir";
+    // 공격 범위 표시용 프로젝터
+    public GameObject projector;
     private void Awake()
     {
         rigid2D = GetComponent<Rigidbody2D>();

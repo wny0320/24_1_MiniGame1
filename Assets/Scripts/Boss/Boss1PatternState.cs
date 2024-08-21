@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -122,16 +123,19 @@ public class Boss1PatternState : BaseState
         Vector3 playerPos = Manager.Game.Player.GetComponent<Transform>().position;
         // 플레이어쪽을 바라보며 검을 치켜든다
         // 애니메이션을 정하는 코드로 넣으면 될듯
+        // 기본적으로 플레이어 방향에 따른 애니메이션이 들어있어서 외관적으로는 상관 없을듯
         yield return new WaitForSeconds(1f);
         // 5번 반복
         for (int _attackNum = 0; _attackNum < 5; _attackNum++)
         {
+            Debug.Log("Attacked");
             // 검을 내려쳐서 범위 내의 플레이어가 있다면 데미지를 입힘
             // 여기서 그렇다면 플레이어 탐지와 데미지 입히는 로직이 들어가야함
             // 콜라이더로 할건지 탐색으로 할지 생각해야함 
             yield return new WaitForSeconds(0.8f);
         }
         controller.ChangeState(BossState.Move);
+        bossController.patternTimer = 0;
         animator.SetBool(BOSS_PATTERN1, false);
         yield return Manager.Instance.nowPattern = null;
     }
@@ -146,6 +150,7 @@ public class Boss1PatternState : BaseState
         // 다음 패턴 주기 3초 증가
         bossController.PatternTimeAdder(3f);
         controller.ChangeState(BossState.Move);
+        bossController.patternTimer = 0;
         animator.SetBool(BOSS_PATTERN2, false);
         yield return Manager.Instance.nowPattern = null;
     }
@@ -161,6 +166,7 @@ public class Boss1PatternState : BaseState
         // 화살 발사
         // 맞았다면 데미지
         controller.ChangeState(BossState.Move);
+        bossController.patternTimer = 0;
         animator.SetBool(BOSS_PATTERN3, false);
         yield return Manager.Instance.nowPattern = null;
     }
@@ -172,28 +178,52 @@ public class Boss1PatternState : BaseState
         // 1.5초 뒤 점프
         yield return new WaitForSeconds(1.5f);
         // 점프
-        // 2초간 예상 낙하지점 표시, 플레이어를 따라감
-        float downTimer = 2f;
-        float downTime = 0f;
+        float bossJumpTime = 1f;
+        float bossJumpTimer = 0f;
+        while(bossJumpTimer <= bossJumpTime)
+        {
+            rb.transform.position += new Vector3(0, 1, 0) * Time.deltaTime;
+            bossJumpTimer += Time.deltaTime;
+            yield return null;
+        }
         // 2초간 반복
+        float bossTrackTime = 2f;
+        float bossTrackTimer = 0f;
         // 플레이어의 이속을 받아오기 위해 스탯을 가져옴
         Stat playerStat = Manager.Game.Player.GetComponent<Stat>();
         Vector3 targetPos = Manager.Game.Player.GetComponent<Transform>().position;
         Debug.Log(playerStat);
-        while (true)
+        while (bossTrackTimer <= bossTrackTime)
         {
-            if (downTime > downTimer)
-                break;
             Vector3 playerPos = Manager.Game.Player.GetComponent<Transform>().position;
             // 갱신된 플레이어의 위치로 이동
             targetPos =  Vector3.MoveTowards(targetPos, playerPos, playerStat.MoveSpeed * 0.9f);
             // targetPos 위치로 원 이동
-            yield return downTime += Time.deltaTime;
+            yield return bossTrackTime += Time.deltaTime;
         }
+        rb.transform.position = new Vector3(targetPos.x, rb.transform.position.y, targetPos.z);
         // 플레이어 위치로 내려찍음, 자세한 속도와 그런건 정해진게 없어서 그냥 하면 될듯?
+        float bossDownTime = 1f;
+        float bossDownTimer = 0f;
         // 내려찍음
+        while(bossDownTimer <= bossDownTime)
+        {
+            rb.transform.position -= new Vector3(0, 1, 0) * Time.deltaTime;
+            bossJumpTimer += Time.deltaTime;
+            yield return null;
+        }
         // 3 단위미터 내 원형으로 데미지를 줌
+        RaycastHit[] hits;
+        hits = Physics.SphereCastAll(rb.transform.position + new Vector3(0, 2, 0), bossController.unitDis, Vector3.down);
+        foreach(RaycastHit hit in hits)
+        {
+            if(hit.rigidbody.TryGetComponent<Stat>(out Stat _stat))
+            {
+                _stat.OnAttacked(stat);
+            }
+        }
         controller.ChangeState(BossState.Move);
+        bossController.patternTimer = 0;
         animator.SetBool(BOSS_PATTERN4 , false);
         yield return Manager.Instance.nowPattern = null;
     }
@@ -217,6 +247,7 @@ public class Boss1PatternState : BaseState
         }
         bossController.reduceDamageFlag=false;
         controller.ChangeState(BossState.Move);
+        bossController.patternTimer = 0;
         animator.SetBool(BOSS_PATTERN5 , false);
         yield return Manager.Instance.nowPattern = null;
     }
