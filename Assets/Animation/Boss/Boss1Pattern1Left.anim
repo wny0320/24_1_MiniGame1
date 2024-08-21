@@ -22,27 +22,27 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: -1123055022, guid: 434a3d0fb344e9040bc9a47fdec57d4a, type: 3}
-    - time: 0.16666667
-      value: {fileID: 685801358, guid: 434a3d0fb344e9040bc9a47fdec57d4a, type: 3}
-    - time: 0.33333334
-      value: {fileID: -319630108, guid: 434a3d0fb344e9040bc9a47fdec57d4a, type: 3}
-    - time: 0.5
-      value: {fileID: 526726145, guid: 434a3d0fb344e9040bc9a47fdec57d4a, type: 3}
-    - time: 0.6666667
-      value: {fileID: -588224185, guid: 34009e3ede60afb48a678d0c18858d03, type: 3}
-    - time: 0.8333333
-      value: {fileID: -146427881, guid: 34009e3ede60afb48a678d0c18858d03, type: 3}
     - time: 1
-      value: {fileID: 489782553, guid: 34009e3ede60afb48a678d0c18858d03, type: 3}
+      value: {fileID: 685801358, guid: 434a3d0fb344e9040bc9a47fdec57d4a, type: 3}
     - time: 1.1666666
-      value: {fileID: -1760764784, guid: 34009e3ede60afb48a678d0c18858d03, type: 3}
+      value: {fileID: -319630108, guid: 434a3d0fb344e9040bc9a47fdec57d4a, type: 3}
     - time: 1.3333334
-      value: {fileID: -1662036796, guid: 965f04c99b220344fac83c85cedf8ebf, type: 3}
+      value: {fileID: 526726145, guid: 434a3d0fb344e9040bc9a47fdec57d4a, type: 3}
     - time: 1.5
-      value: {fileID: -898845608, guid: 965f04c99b220344fac83c85cedf8ebf, type: 3}
+      value: {fileID: -588224185, guid: 34009e3ede60afb48a678d0c18858d03, type: 3}
     - time: 1.6666666
-      value: {fileID: 874048489, guid: 965f04c99b220344fac83c85cedf8ebf, type: 3}
+      value: {fileID: -146427881, guid: 34009e3ede60afb48a678d0c18858d03, type: 3}
     - time: 1.8333334
+      value: {fileID: 489782553, guid: 34009e3ede60afb48a678d0c18858d03, type: 3}
+    - time: 2
+      value: {fileID: -1760764784, guid: 34009e3ede60afb48a678d0c18858d03, type: 3}
+    - time: 2.1666667
+      value: {fileID: -1662036796, guid: 965f04c99b220344fac83c85cedf8ebf, type: 3}
+    - time: 2.3333333
+      value: {fileID: -898845608, guid: 965f04c99b220344fac83c85cedf8ebf, type: 3}
+    - time: 2.5
+      value: {fileID: 874048489, guid: 965f04c99b220344fac83c85cedf8ebf, type: 3}
+    - time: 2.6666667
       value: {fileID: -472168369, guid: 965f04c99b220344fac83c85cedf8ebf, type: 3}
     attribute: m_Sprite
     path: 
@@ -83,7 +83,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.85
+    m_StopTime: 2.6833334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
