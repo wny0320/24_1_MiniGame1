@@ -698,7 +698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stat: {fileID: 0}
-  ground: {fileID: 610484285}
+  ground: {fileID: 0}
   nowBoss: 0
   reduceDamageFlag: 0
   noDamagedTime: 0
@@ -710,6 +710,8 @@ MonoBehaviour:
   patternTime: 5
   patternTimer: 0
   unitDis: 0.1
+  projector: {fileID: 8243977947483925171, guid: e587ee9e283cd8e4cbd449191e36749d, type: 3}
+  zzol: {fileID: 0}
 --- !u!50 &380255370
 Rigidbody2D:
   serializedVersion: 4
@@ -751,7 +753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: 500
   _maxHp: 500
-  _attack: 1
+  _attack: 10
   _defense: 0
   _moveSpeed: 1
   _attackSpeed: 1
@@ -1707,6 +1709,7 @@ GameObject:
   - component: {fileID: 1412402338}
   - component: {fileID: 1412402337}
   - component: {fileID: 1412402342}
+  - component: {fileID: 1412402343}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1896,6 +1899,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7294922, y: 1.1584996}
   m_EdgeRadius: 0
+--- !u!114 &1412402343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412402336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9293e02df5ab6940aae2f8ff1722484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hp: 0
+  _maxHp: 0
+  _attack: 0
+  _defense: 0
+  _moveSpeed: 1
+  _attackSpeed: 0
 --- !u!1 &1433922738
 GameObject:
   m_ObjectHideFlags: 0
@@ -2182,7 +2203,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0.25, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0.27999997, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3
@@ -6297,6 +6318,6 @@ SceneRoots:
   - {fileID: 595034909217974607}
   - {fileID: 946120523}
   - {fileID: 610484287}
-  - {fileID: 380255367}
-  - {fileID: 1298815188}
   - {fileID: 1412402341}
+  - {fileID: 1298815188}
+  - {fileID: 380255367}
