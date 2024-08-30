@@ -48,7 +48,6 @@ public class Boss1PatternState : BaseState
     }
     private void PatternSelect()
     {
-        Debug.Log("Pattern Selecting...");
         //플레이어의 Transform을 받아오지 못할 경우 return
         if (Manager.Game.Player.transform == null)
             return;
@@ -58,6 +57,7 @@ public class Boss1PatternState : BaseState
         //패턴 리스트에 패턴이 없다면 return
         if (patternList.Count < 1)
             return;
+        Debug.Log("Pattern Selecting...");
         Transform playerTrans = Manager.Game.Player.transform;
         float playerDis = Vector3.Magnitude((Vector2)(playerTrans.position) - rb.position);
         // 패턴마다 조건이 충족되었는지 담고 있는 트리거 어레이
@@ -73,8 +73,8 @@ public class Boss1PatternState : BaseState
             patternTrigger[3] = true;
         if (playerDis < bossController.unitDis * 20f)
             patternTrigger[4] = true;
-        if (bossController.phase2Flag && controller.stat.Hp <= 20f && bossController.noDamagedTime >= 8f)
-            patternTrigger[5] = true;
+        //if (bossController.phase2Flag && controller.stat.Hp <= 20f && bossController.noDamagedTime >= 8f)
+        //    patternTrigger[5] = true;
         #endregion
         #region 랜덤 패턴 State Change
         List<int> activeTriggerList = new List<int>();
@@ -85,7 +85,8 @@ public class Boss1PatternState : BaseState
         }
         int n = UnityEngine.Random.Range(0, activeTriggerList.Count);
         int selectedIndex = activeTriggerList[n];
-        MethodInfo targetPattern = patternList[selectedIndex];
+        //MethodInfo targetPattern = patternList[selectedIndex];
+        MethodInfo targetPattern = patternList[1];
         Debug.Log("Selected Pattern = " + targetPattern);
         Manager.Instance.InvokePattern(this, targetPattern);
         // controller.ChangeState(BossState.Move); 이건 패턴들 뒤에 넣어야할듯?
@@ -117,37 +118,90 @@ public class Boss1PatternState : BaseState
     #region 패턴
     public IEnumerator Pattern1()
     {
+        List<Collider2D> hitted = new();
         Debug.Log("Pattern1 Invoke");
         animator.SetBool(BOSS_PATTERN1, true);
-        // Vector3는 값형, 값을 받으면 거기서 고정
         Vector3 playerPos = Manager.Game.Player.GetComponent<Transform>().position;
-        // 플레이어쪽을 바라보며 검을 치켜든다
-        // 애니메이션을 정하는 코드로 넣으면 될듯
-        // 기본적으로 플레이어 방향에 따른 애니메이션이 들어있어서 외관적으로는 상관 없을듯
         yield return new WaitForSeconds(1f);
-        // 5번 반복
-        for (int _attackNum = 0; _attackNum < 5; _attackNum++)
+        float t = 0f;
+        float xVal = animator.GetFloat("xDir");
+        float yVal = animator.GetFloat("yDir");
+
+        // 4번 반복
+        for (int _attackNum = 0; _attackNum < 4; _attackNum++)
         {
-            Debug.Log("Attacked");
-            // 검을 내려쳐서 범위 내의 플레이어가 있다면 데미지를 입힘
-            // 여기서 그렇다면 플레이어 탐지와 데미지 입히는 로직이 들어가야함
-            // 콜라이더로 할건지 탐색으로 할지 생각해야함 
-            yield return new WaitForSeconds(0.8f);
+            Debug.Log("Attack Start");
+            while (t <= (1f / 6f * 2f))
+            {
+                Collider2D[] cols;
+                t += Time.deltaTime;
+                yield return null;
+                if (xVal == 0 && yVal == 1) //up
+                    cols = Physics2D.OverlapBoxAll(rb.position + Vector2.up, Vector2.one * 2, 0f, 1 << LayerMask.NameToLayer("Player"));
+                else if (xVal == 0 && yVal == -1) //d
+                    cols = Physics2D.OverlapBoxAll(rb.position + Vector2.down, Vector2.one * 2, 0f, 1 << LayerMask.NameToLayer("Player"));
+                else if (xVal == 1 && yVal == 0) //ri
+                    cols = Physics2D.OverlapBoxAll(rb.position + Vector2.right * 1.5f, new Vector2(2, 3), 0f, 1 << LayerMask.NameToLayer("Player"));
+                else //le
+                    cols = Physics2D.OverlapBoxAll(rb.position + Vector2.left * 1.5f, new Vector2(2, 3), 0f, 1 << LayerMask.NameToLayer("Player"));
+
+                foreach (Collider2D col in cols)
+                {
+                    if (!hitted.Contains(col))
+                    {
+                        hitted.Add(col);
+                        col.GetComponent<IReceiveAttack>()?.OnHit(20);
+                    }
+                }
+            }
+            Debug.Log("Attack End");
+            hitted.Clear();
+            t = 0f;
+            yield return new WaitForSeconds(1f / 6f);
         }
-        controller.ChangeState(BossState.Move);
-        bossController.patternTimer = 0;
+        Debug.Log("loop out");
         animator.SetBool(BOSS_PATTERN1, false);
+        controller.ChangeState(BossState.Move);
         yield return Manager.Instance.nowPattern = null;
     }
     public IEnumerator Pattern2()
     {
+        List<Collider2D> hitted = new();
         Debug.Log("Pattern2 Invoke");
         animator.SetBool(BOSS_PATTERN2, true);
         // 검을 찌를 준비 자세를 취함
-        yield return new WaitForSeconds(1.3f);
-        // 전방 10단위미터 만큼 공격을 가하며 이동
-        // 범위 내에 플레이어가 있다면 데미지를 입힘
-        // 다음 패턴 주기 3초 증가
+        yield return new WaitForSeconds(1.25f);
+        Vector3 dir = (Manager.Game.Player.GetComponent<Transform>().position - (Vector3)rb.position).normalized;
+
+        float t = 0f;
+        float xVal = animator.GetFloat("xDir");
+        float yVal = animator.GetFloat("yDir");
+        while (t <= 0.5f)
+        {
+            Collider2D[] cols;
+            t += Time.deltaTime;
+            yield return null;
+            if (xVal == 0 && yVal == 1) //up
+                cols = Physics2D.OverlapBoxAll(rb.position + Vector2.up, Vector2.one * 2, 0f, 1 << LayerMask.NameToLayer("Player"));
+            else if (xVal == 0 && yVal == -1) //d
+                cols = Physics2D.OverlapBoxAll(rb.position + Vector2.down, Vector2.one * 2, 0f, 1 << LayerMask.NameToLayer("Player"));
+            else if (xVal == 1 && yVal == 0) //ri
+                cols = Physics2D.OverlapBoxAll(rb.position + Vector2.right * 1.5f, new Vector2(3, 2), 0f, 1 << LayerMask.NameToLayer("Player"));
+            else //le
+                cols = Physics2D.OverlapBoxAll(rb.position + Vector2.left * 1.5f, new Vector2(3, 2), 0f, 1 << LayerMask.NameToLayer("Player"));
+
+            rb.MovePosition(dir * 0.5f + (Vector3)rb.position);
+
+            foreach (Collider2D col in cols)
+            {
+                if (!hitted.Contains(col))
+                {
+                    hitted.Add(col);
+                    col.GetComponent<IReceiveAttack>()?.OnHit(80);
+                }
+            }
+        }
+
         bossController.PatternTimeAdder(3f);
         controller.ChangeState(BossState.Move);
         bossController.patternTimer = 0;
@@ -158,16 +212,45 @@ public class Boss1PatternState : BaseState
     {
         Debug.Log("Pattern3 Invoke");
         animator.SetBool(BOSS_PATTERN3, true);
+        yield return null;
         // 병사 3명 소환, 병사, 화살 prefab 필요
+        GameObject[] zzol = new GameObject[2];
+        for(int i = 0; i < 3; i++)
+        {
+            zzol[i] = GameObject.Instantiate(bossController.zzol);
+            switch(i)
+            {
+                case 0:
+                    zzol[i].transform.position = new Vector3(rb.transform.position.x - 5f, rb.transform.position.y, rb.transform.position.z);
+                    break;
+                case 1:
+                    zzol[i].transform.position = new Vector3(rb.transform.position.x + 5f, rb.transform.position.y, rb.transform.position.z);
+                    break;
+                case 2:
+                    zzol[i].transform.position = new Vector3(rb.transform.position.x, rb.transform.position.y - 5f, rb.transform.position.z);
+                    break;
+                default:
+                    break;
+            }
+        }
         // 0.8초간 병사 활시위 당김
+        yield return new WaitForSeconds(0.8f);
         // 4초간 플레이어 조준
+        float ArrowTime = 4f;
+        float ArrowTimer = 0f;
+        Transform playerTrans = null;
+        while(ArrowTimer <= ArrowTime)
+        {
+            ArrowTimer += Time.deltaTime;
+            playerTrans = Manager.Game.Player.transform;
+        }
         // 이후 플레이어 위치로 화살 발사
         Vector3 playerPos = Manager.Game.Player.GetComponent<Transform>().position;
         // 화살 발사
         // 맞았다면 데미지
-        controller.ChangeState(BossState.Move);
         bossController.patternTimer = 0;
         animator.SetBool(BOSS_PATTERN3, false);
+        controller.ChangeState(BossState.Move);
         yield return Manager.Instance.nowPattern = null;
     }
     public IEnumerator Pattern4()
@@ -182,7 +265,7 @@ public class Boss1PatternState : BaseState
         float bossJumpTimer = 0f;
         while(bossJumpTimer <= bossJumpTime)
         {
-            rb.transform.position += new Vector3(0, 1, 0) * Time.deltaTime;
+            rb.transform.position += new Vector3(0, 20, 0) * Time.deltaTime;
             bossJumpTimer += Time.deltaTime;
             yield return null;
         }
@@ -199,58 +282,58 @@ public class Boss1PatternState : BaseState
             // 갱신된 플레이어의 위치로 이동
             targetPos =  Vector3.MoveTowards(targetPos, playerPos, playerStat.MoveSpeed * 0.9f);
             // targetPos 위치로 원 이동
-            yield return bossTrackTime += Time.deltaTime;
+            yield return bossTrackTimer += Time.deltaTime;
         }
-        rb.transform.position = new Vector3(targetPos.x, rb.transform.position.y, targetPos.z);
+        rb.transform.position = new Vector3(targetPos.x, targetPos.y + 20f, targetPos.z);
         // 플레이어 위치로 내려찍음, 자세한 속도와 그런건 정해진게 없어서 그냥 하면 될듯?
         float bossDownTime = 1f;
         float bossDownTimer = 0f;
         // 내려찍음
         while(bossDownTimer <= bossDownTime)
         {
-            rb.transform.position -= new Vector3(0, 1, 0) * Time.deltaTime;
-            bossJumpTimer += Time.deltaTime;
+            rb.transform.position -= new Vector3(0, 20, 0) * Time.deltaTime;
+            bossDownTimer += Time.deltaTime;
             yield return null;
         }
         // 3 단위미터 내 원형으로 데미지를 줌
-        RaycastHit[] hits;
-        hits = Physics.SphereCastAll(rb.transform.position + new Vector3(0, 2, 0), bossController.unitDis, Vector3.down);
-        foreach(RaycastHit hit in hits)
+        RaycastHit2D[] hits;
+        hits = Physics2D.CircleCastAll(rb.transform.position + new Vector3(0, 2, 0), bossController.unitDis, Vector3.down);
+        foreach(RaycastHit2D hit in hits)
         {
-            if(hit.rigidbody.TryGetComponent<Stat>(out Stat _stat))
+            if(hit.rigidbody.TryGetComponent<IReceiveAttack>(out IReceiveAttack _interface))
             {
-                _stat.OnAttacked(stat);
+                _interface.OnHit(100f);
             }
         }
-        controller.ChangeState(BossState.Move);
         bossController.patternTimer = 0;
         animator.SetBool(BOSS_PATTERN4 , false);
-        yield return Manager.Instance.nowPattern = null;
-    }
-    public IEnumerator Pattern5()
-    {
-        Debug.Log("Pattern5 Invoke");
-        animator.SetBool (BOSS_PATTERN5, true);
-        // 3초에 걸려서 체력 100을 회복, 받는 데미지 30% 감소
-        int healAmount = 100;
-        float healTimer = 3f;
-        float healTime = 0f;
-        while (true)
-        {
-            if (healTime > healTimer)
-                break;
-            // 받는 데미지 30% 감소
-            bossController.reduceDamageFlag = true;
-            // 3초에 따른 호출당 피회복
-            bossController.stat.Hp += healAmount/healTimer * Time.deltaTime;
-            yield return healTime += Time.deltaTime;
-        }
-        bossController.reduceDamageFlag=false;
         controller.ChangeState(BossState.Move);
-        bossController.patternTimer = 0;
-        animator.SetBool(BOSS_PATTERN5 , false);
         yield return Manager.Instance.nowPattern = null;
     }
+    //public IEnumerator Pattern5()
+    //{
+    //    Debug.Log("Pattern5 Invoke");
+    //    animator.SetBool (BOSS_PATTERN5, true);
+    //    // 3초에 걸려서 체력 100을 회복, 받는 데미지 30% 감소
+    //    int healAmount = 100;
+    //    float healTimer = 3f;
+    //    float healTime = 0f;
+    //    while (true)
+    //    {
+    //        if (healTime > healTimer)
+    //            break;
+    //        // 받는 데미지 30% 감소
+    //        bossController.reduceDamageFlag = true;
+    //        // 3초에 따른 호출당 피회복
+    //        bossController.stat.Hp += healAmount/healTimer * Time.deltaTime;
+    //        yield return healTime += Time.deltaTime;
+    //    }
+    //    bossController.patternTimer = 0;
+    //    bossController.reduceDamageFlag=false;
+    //    animator.SetBool(BOSS_PATTERN5 , false);
+    //    controller.ChangeState(BossState.Move);
+    //    yield return Manager.Instance.nowPattern = null;
+    //}
     #endregion
     #region 과거 패턴 함수들
     //public async void Pattern1()

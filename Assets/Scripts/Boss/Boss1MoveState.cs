@@ -9,6 +9,7 @@ public class Boss1MoveState : BaseState
     const string BOSS_MOVE = "MoveFlag";
     BossController bossController;
     bool pattern0Flag = false;
+    float originPatternTime = float.NegativeInfinity;
     public Boss1MoveState(BaseController controller, Rigidbody2D rb = null, Animator animator = null, Stat stat = null, Transform transform = null)
         : base(controller, rb, animator, stat)
     {
@@ -49,7 +50,7 @@ public class Boss1MoveState : BaseState
         Transform playerTrans = Manager.Game.Player.transform;
         Vector3 playerDir = Vector3.Normalize((Vector2)playerTrans.position - rb.position);
         Vector3 playerDis = (Vector2)playerTrans.position - rb.position;
-        if (playerDis.magnitude < bossController.unitDis)
+        if (playerDis.magnitude < 2f)
         {
             animator.SetBool(BOSS_MOVE, false);
             return;
@@ -67,7 +68,12 @@ public class Boss1MoveState : BaseState
         //현재 패턴이 아직 진행되고 있다면 패턴 시간 값을 증가시키지 않음
         if (Manager.Instance.nowPattern != null)
             return;
+        if (originPatternTime < 0)
+            originPatternTime = bossController.patternTime;
+        if (bossController.patternTime != originPatternTime)
+            bossController.patternTime = originPatternTime;
         bossController.patternTimer += Time.deltaTime;
+        Debug.Log("Timer Works");
         Transform playerTrans = Manager.Game.Player.transform;
         float playerDis = Vector3.Magnitude(playerTrans.position - rb.transform.position);
         // 보스 컨트롤러의 타임 에더 함수가 작동된 경우엔 시간을 한번 빼준다
@@ -89,6 +95,7 @@ public class Boss1MoveState : BaseState
             {
                 pattern0Flag = false;
                 Debug.Log("pattern time = " + bossController.patternTimer);
+                animator.SetBool(BOSS_MOVE, false);
                 controller.ChangeState(BossState.Pattern);
             }
             //아래는 거리 상관없이 랜덤으로 구현했던것

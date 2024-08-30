@@ -21,11 +21,13 @@ public class BossController : BaseController
     // 스톱워치와 같은 타이머, 초기값 0
     public float patternTimer = 0f;
     // 단위 거리
-    public float unitDis = 0.1f;
+    public float unitDis = 1f;
     public const string X_DIR = "xDir";
     public const string Y_DIR = "yDir";
     // 공격 범위 표시용 프로젝터
     public GameObject projector;
+    // 부하 프리팹
+    public GameObject zzol;
     private void Awake()
     {
         rigid2D = GetComponent<Rigidbody2D>();
