@@ -43,5 +43,6 @@ public enum NowBoss
 public enum SceneType
 {
     Main = 0,
-    
+    menutest = 1,   //START Scene
+    Stage1 = 2,     //BUllet Scene
 }
