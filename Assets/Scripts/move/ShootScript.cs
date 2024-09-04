@@ -47,14 +47,37 @@ public class ShootScript : MonoBehaviour
 
     void FaceMouse()   // 총이 마우스 포인터를 따라서 움직이도록
     {
-       
+
+        /* mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+
+         Vector3 rotation = mousePos - transform.position; ;
+
+         float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+
+         transform.rotation = Quaternion.Euler(0, 0, rotZ);*/
+        // 마우스 위치를 월드 좌표로 변환
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
-        Vector3 rotation = mousePos - transform.position; ;
+        // 총의 위치에서 마우스 위치로의 회전 벡터를 계산
+        Vector3 rotation = mousePos - transform.position;
 
+        // 각도를 계산
         float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
 
+        // 총의 회전 설정
         transform.rotation = Quaternion.Euler(0, 0, rotZ);
+
+        // 마우스가 총의 왼쪽에 있을 때 좌우 반전
+        if (rotation.x < 0)
+        {
+            // 총을 좌우 반전시키기 위해 X축의 로컬 스케일을 -1로 설정
+            transform.localScale = new Vector3(1, -1, 1);
+        }
+        else
+        {
+            // 마우스가 총의 오른쪽에 있을 때는 원래대로 설정
+            transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 
     void FireRateCalc() // 총 연사 속도를 위한 함수
