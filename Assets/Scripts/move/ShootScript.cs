@@ -90,7 +90,7 @@ public class ShootScript : MonoBehaviour
 
     void TryFire()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             if (currentFireRate <= 0 && currentGun.BulletCount > 0)  // 연사속도에 맞게 총알이 있을때만 총알 발사
             {
@@ -109,7 +109,7 @@ public class ShootScript : MonoBehaviour
     void Shoot()
     {
         //Vector3 inputPos;
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             currentGun.BulletCount--;                           // 총알 갯수 카운트
 
@@ -118,7 +118,7 @@ public class ShootScript : MonoBehaviour
             Vector3 shootDirection = Vector3.Normalize(aimPosition - transform.position);
 
             GameObject nowBullet = Manager.Bullet.GetBullet();
-            Manager.Bullet.BulletInit(nowBullet, transform.position, shootDirection);
+            Manager.Bullet.BulletInit(nowBullet,ShootPoint.position, shootDirection);
         }
 
     }
