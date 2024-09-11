@@ -84,8 +84,8 @@ public class Boss1PatternState : BaseState
         }
         int n = UnityEngine.Random.Range(0, activeTriggerList.Count);
         int selectedIndex = activeTriggerList[n];
-        MethodInfo targetPattern = patternList[selectedIndex];
-        //MethodInfo targetPattern = patternList[3];
+        //MethodInfo targetPattern = patternList[selectedIndex];
+        MethodInfo targetPattern = patternList[3];
         Debug.Log("Selected Pattern = " + targetPattern);
         Manager.Instance.InvokePattern(this, targetPattern);
         // controller.ChangeState(BossState.Move); 이건 패턴들 뒤에 넣어야할듯?
@@ -320,15 +320,10 @@ public class Boss1PatternState : BaseState
             yield return null;
         }
         // 3 단위미터 내 원형으로 데미지를 줌
-        RaycastHit2D[] hits;
-        hits = Physics2D.CircleCastAll(rb.transform.position + new Vector3(0, 2, 0), bossController.unitDis, Vector3.down);
-        foreach(RaycastHit2D hit in hits)
-        {
-            Debug.Log(hit);
-            Debug.Log(hit.rigidbody);
-            Debug.Log(hit.rigidbody.GetComponent<IReceiveAttack>());
-            hit.rigidbody.GetComponent<IReceiveAttack>()?.OnHit(100);
-        }
+        Collider2D[] cols;
+        cols = Physics2D.OverlapCircleAll(rb.transform.position, bossController.unitDis * 3f, 1 << LayerMask.NameToLayer("Player"));
+        foreach(Collider2D hit in cols)
+            hit.GetComponent<IReceiveAttack>()?.OnHit(100);
         GameObject.Destroy(range);
         bossController.patternTimer = 0;
         animator.SetBool(BOSS_PATTERN4 , false);
