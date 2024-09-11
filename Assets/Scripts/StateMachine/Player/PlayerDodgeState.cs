@@ -34,6 +34,8 @@ public class PlayerDodgeState : BaseState
         col.enabled = false;
         rb.AddForce(dir*5, ForceMode2D.Impulse);
         animator.SetBool(PLAYER_DODGING, true);
+
+        Global.sfx.Play(Global.Sound.DodgeClip);
     }
 
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossController : BaseController
+public class BossController : BaseController, IReceiveAttack
 {
     //해당 속성들이 보스 공통일지는 모름
     public NowBoss nowBoss;
@@ -72,7 +72,7 @@ public class BossController : BaseController
         stateMachine.SetState(states[(BossState)s]);
     }
 
-    public override void OnHit(float damage)
+    public void OnHit(float damage)
     {
         noDamagedTime = 0f;
         if(reduceDamageFlag == true)
@@ -81,6 +81,7 @@ public class BossController : BaseController
         }
         stat.Hp -= damage;
     }
+
     public void PatternTimeAdder(float _time)
     {
         timeAdd = _time;

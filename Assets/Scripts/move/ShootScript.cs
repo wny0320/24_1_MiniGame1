@@ -119,6 +119,27 @@ public class ShootScript : MonoBehaviour
 
             GameObject nowBullet = Manager.Bullet.GetBullet();
             Manager.Bullet.BulletInit(nowBullet,ShootPoint.position, shootDirection);
+
+            //사운드
+            switch(currentGun.weapontype)
+            {
+                case WeaponType.Sniper:
+                    Global.sfx.Play(Global.Sound.SniperClip);
+                    break;
+                case WeaponType.Nomal_Gun:
+                    Global.sfx.Play(Global.Sound.PistolClip);
+                    break;
+                case WeaponType.ShotGun:
+                    //현재 샷건이 없음
+                    break;
+                case WeaponType.MiniGun:
+                    //미니건을 라이플 사운드로 일단 대체
+                    Global.sfx.Play(Global.Sound.RifleClip);
+                    break;
+                case WeaponType.M4:
+                    Global.sfx.Play(Global.Sound.RifleClip);
+                    break;
+            }
         }
 
     }
@@ -127,6 +148,7 @@ public class ShootScript : MonoBehaviour
         if (currentGun.BulletCount <= 0)
         {
             currentGun.BulletCount += currentGun.ReloadBullet;
+            Global.sfx.Play(Global.Sound.ReloadingClip);
             Debug.Log("재장전");
         }
         

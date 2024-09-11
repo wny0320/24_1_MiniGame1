@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestController : BaseController
+public class TestController : BaseController, IReceiveAttack
 {
     TestState testState;
     private void Awake()
@@ -42,7 +42,7 @@ public class TestController : BaseController
         // stateMachine.SetState(states[(BossState)s]);
     }
 
-    public override void OnHit(float damage)
+    public void OnHit(float damage)
     {
 
     }
