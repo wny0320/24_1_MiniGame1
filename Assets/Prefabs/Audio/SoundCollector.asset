@@ -13,3 +13,8 @@ MonoBehaviour:
   m_Name: SoundCollector
   m_EditorClassIdentifier: 
   testclip: {fileID: 8300000, guid: 06856bf4b5b4eee4ca6aeb1af86ca1c1, type: 3}
+  DodgeClip: {fileID: 8300000, guid: 34dba5e0d6e7c124ba845f3061a89dd0, type: 3}
+  ReloadingClip: {fileID: 8300000, guid: 6efe6e7cf6e36c841a5a77475d652e53, type: 3}
+  PistolClip: {fileID: 8300000, guid: a15ef6e9c21d95e41bd406bbb40dd348, type: 3}
+  RifleClip: {fileID: 8300000, guid: 557f702897183b84386dd474c5176eb6, type: 3}
+  SniperClip: {fileID: 8300000, guid: 0e10515072451864b9d671223bbc702f, type: 3}

@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class GunType : MonoBehaviour
 {
-    public enum WeaponType
-    {
-        Nomal_Gun,M4,MiniGun,ShotGun,Sniper
-    }
-
     [Header("ÃÑ À¯Çü")]
     public WeaponType weapontype;
 

@@ -29,6 +29,7 @@ public class PlayerController : BaseController, IReceiveAttack
         rigid2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
+        stat = GetComponent<Stat>();
 
         InitStateMachine();
 
@@ -78,6 +79,7 @@ public class PlayerController : BaseController, IReceiveAttack
 
     public void Parrying()
     {
+        if (!canParrying) return;
         canParrying = false;
         StartCoroutine(ParryingCoolTime());
         ChangeState(PlayerState.Parrying);
@@ -90,16 +92,27 @@ public class PlayerController : BaseController, IReceiveAttack
     }
 
 
-    public override void OnHit(float damage)
+    public void OnHit(float damage)
     {
         if(isParrying)
         {
-
+            Debug.Log("player parryed");
+            return;
         }
 
         if (isDodging)
         {
+            Debug.Log("player dodged");
+            return;
+        }
 
+        Debug.Log("player hitted");
+        float finalDamage = Math.Max(0, damage - stat.Defense);
+        stat.Hp -= finalDamage;
+        if(stat.Hp <= 0)
+        {
+            Manager.Game.isAlive = false;
+            //캐릭터 사망 처리
         }
     }
 

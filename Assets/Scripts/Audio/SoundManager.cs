@@ -34,8 +34,6 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        Global.sfx.Play(Global.Sound.testclip);
-
     }
 
     public void Play(AudioClip clip)

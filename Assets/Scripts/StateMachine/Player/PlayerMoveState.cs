@@ -37,6 +37,8 @@ public class PlayerMoveState : BaseState
 
     public override void OnStateUpdate()
     {
+        if (!Manager.Game.isAlive) return;
+
         animator.SetFloat(X_DIR, inputX);
         animator.SetFloat(Y_DIR, inputY);
 
