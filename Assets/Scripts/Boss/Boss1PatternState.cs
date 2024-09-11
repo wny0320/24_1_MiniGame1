@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -85,8 +84,8 @@ public class Boss1PatternState : BaseState
         }
         int n = UnityEngine.Random.Range(0, activeTriggerList.Count);
         int selectedIndex = activeTriggerList[n];
-        //MethodInfo targetPattern = patternList[selectedIndex];
-        MethodInfo targetPattern = patternList[1];
+        MethodInfo targetPattern = patternList[selectedIndex];
+        //MethodInfo targetPattern = patternList[3];
         Debug.Log("Selected Pattern = " + targetPattern);
         Manager.Instance.InvokePattern(this, targetPattern);
         // controller.ChangeState(BossState.Move); 이건 패턴들 뒤에 넣어야할듯?
@@ -214,40 +213,63 @@ public class Boss1PatternState : BaseState
         animator.SetBool(BOSS_PATTERN3, true);
         yield return null;
         // 병사 3명 소환, 병사, 화살 prefab 필요
-        GameObject[] zzol = new GameObject[2];
+        GameObject[] zzol = new GameObject[3];
+        GameObject[] zzolRange = new GameObject[3];
         for(int i = 0; i < 3; i++)
         {
             zzol[i] = GameObject.Instantiate(bossController.zzol);
+            zzolRange[i] = GameObject.Instantiate(zzol[i].GetComponent<Zzol>()?.zzolRangeObj);
             switch(i)
             {
                 case 0:
-                    zzol[i].transform.position = new Vector3(rb.transform.position.x - 5f, rb.transform.position.y, rb.transform.position.z);
+                    zzol[i].transform.position = new Vector3(rb.transform.position.x - 1f, rb.transform.position.y, rb.transform.position.z);
                     break;
                 case 1:
-                    zzol[i].transform.position = new Vector3(rb.transform.position.x + 5f, rb.transform.position.y, rb.transform.position.z);
+                    zzol[i].transform.position = new Vector3(rb.transform.position.x + 1f, rb.transform.position.y, rb.transform.position.z);
                     break;
                 case 2:
-                    zzol[i].transform.position = new Vector3(rb.transform.position.x, rb.transform.position.y - 5f, rb.transform.position.z);
+                    zzol[i].transform.position = new Vector3(rb.transform.position.x, rb.transform.position.y - 1f, rb.transform.position.z);
                     break;
                 default:
                     break;
             }
+            zzolRange[i].transform.position = zzol[i].transform.position;
         }
         // 0.8초간 병사 활시위 당김
         yield return new WaitForSeconds(0.8f);
         // 4초간 플레이어 조준
         float ArrowTime = 4f;
         float ArrowTimer = 0f;
-        Transform playerTrans = null;
+        Transform playerTrans = Manager.Game.Player.transform;
+        Vector3 targetPos = Vector3.zero;
         while(ArrowTimer <= ArrowTime)
         {
+            foreach (var range in zzolRange)
+            {
+                Vector2 dir = range.transform.position - playerTrans.position;
+                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                Quaternion angleAxis = Quaternion.AngleAxis(angle, Vector3.forward);
+                Quaternion rotation = Quaternion.Slerp(angleAxis, range.transform.rotation, Time.deltaTime * 7f);
+                Debug.Log(angle + ", " + rotation);
+                range.transform.rotation = rotation;
+            }
             ArrowTimer += Time.deltaTime;
-            playerTrans = Manager.Game.Player.transform;
+            targetPos = playerTrans.position;
+            yield return null;
+        }
+        foreach (var range in zzolRange)
+        {
+            GameObject.Destroy(range.gameObject);
         }
         // 이후 플레이어 위치로 화살 발사
-        Vector3 playerPos = Manager.Game.Player.GetComponent<Transform>().position;
         // 화살 발사
-        // 맞았다면 데미지
+        int cnt = zzol.Length;
+        for (int i = 0; i < cnt; i++)
+        {
+            Vector3 dir = Vector3.Normalize(targetPos - zzol[i].transform.position);
+            zzol[i].GetComponent<Zzol>()?.ShootSet(dir);
+        }
+        // 맞았다면 데미지, zzol에서 처리
         bossController.patternTimer = 0;
         animator.SetBool(BOSS_PATTERN3, false);
         controller.ChangeState(BossState.Move);
@@ -276,12 +298,14 @@ public class Boss1PatternState : BaseState
         Stat playerStat = Manager.Game.Player.GetComponent<Stat>();
         Vector3 targetPos = Manager.Game.Player.GetComponent<Transform>().position;
         Debug.Log(playerStat);
+        GameObject range = GameObject.Instantiate(bossController.pattern4Range);
         while (bossTrackTimer <= bossTrackTime)
         {
             Vector3 playerPos = Manager.Game.Player.GetComponent<Transform>().position;
             // 갱신된 플레이어의 위치로 이동
-            targetPos =  Vector3.MoveTowards(targetPos, playerPos, playerStat.MoveSpeed * 0.9f);
+            targetPos =  Vector3.MoveTowards(targetPos, playerPos, playerStat.MoveSpeed * 0.9f * Time.deltaTime);
             // targetPos 위치로 원 이동
+            range.transform.position = targetPos;
             yield return bossTrackTimer += Time.deltaTime;
         }
         rb.transform.position = new Vector3(targetPos.x, targetPos.y + 20f, targetPos.z);
@@ -300,11 +324,12 @@ public class Boss1PatternState : BaseState
         hits = Physics2D.CircleCastAll(rb.transform.position + new Vector3(0, 2, 0), bossController.unitDis, Vector3.down);
         foreach(RaycastHit2D hit in hits)
         {
-            if(hit.rigidbody.TryGetComponent<IReceiveAttack>(out IReceiveAttack _interface))
-            {
-                _interface.OnHit(100f);
-            }
+            Debug.Log(hit);
+            Debug.Log(hit.rigidbody);
+            Debug.Log(hit.rigidbody.GetComponent<IReceiveAttack>());
+            hit.rigidbody.GetComponent<IReceiveAttack>()?.OnHit(100);
         }
+        GameObject.Destroy(range);
         bossController.patternTimer = 0;
         animator.SetBool(BOSS_PATTERN4 , false);
         controller.ChangeState(BossState.Move);

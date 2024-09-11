@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stat: {fileID: 0}
   ground: {fileID: 0}
-  nowBoss: 0
+  nowBoss: 1
   reduceDamageFlag: 0
   noDamagedTime: 0
   phase2Flag: 0
@@ -113,8 +113,8 @@ MonoBehaviour:
   patternTime: 5
   patternTimer: 0
   unitDis: 0.1
-  projector: {fileID: 8243977947483925171, guid: e587ee9e283cd8e4cbd449191e36749d, type: 3}
-  zzol: {fileID: 0}
+  zzol: {fileID: 7920139117141611722, guid: 1985718d71a8acf488886e8f9ca4db83, type: 3}
+  pattern4Range: {fileID: 6278708500720165796, guid: 3bf90b3f26a327044ac00302965ca591, type: 3}
 --- !u!50 &2968658851702899638
 Rigidbody2D:
   serializedVersion: 4
@@ -159,7 +159,6 @@ MonoBehaviour:
   _attack: 10
   _defense: 0
   _moveSpeed: 1
-  _attackSpeed: 1
 --- !u!95 &6205770951435216138
 Animator:
   serializedVersion: 5

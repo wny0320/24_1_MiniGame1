@@ -24,10 +24,9 @@ public class BossController : BaseController, IReceiveAttack
     public float unitDis = 1f;
     public const string X_DIR = "xDir";
     public const string Y_DIR = "yDir";
-    // 공격 범위 표시용 프로젝터
-    public GameObject projector;
     // 부하 프리팹
     public GameObject zzol;
+    public GameObject pattern4Range;
     private void Awake()
     {
         rigid2D = GetComponent<Rigidbody2D>();
