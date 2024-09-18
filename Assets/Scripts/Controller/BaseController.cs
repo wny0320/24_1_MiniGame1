@@ -10,8 +10,6 @@ public class BaseController : MonoBehaviour
     protected Rigidbody2D rigid2D;
     protected Animator animator;
 
-    public GameObject ground; // Global 로 빼는게 나을듯 // 그래보인다
-
     //상태 패턴
     #region StateMachine
     protected StateMachine stateMachine;

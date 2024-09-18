@@ -85,7 +85,7 @@ public class Boss1PatternState : BaseState
         int n = UnityEngine.Random.Range(0, activeTriggerList.Count);
         int selectedIndex = activeTriggerList[n];
         //MethodInfo targetPattern = patternList[selectedIndex];
-        MethodInfo targetPattern = patternList[3];
+        MethodInfo targetPattern = patternList[0];
         Debug.Log("Selected Pattern = " + targetPattern);
         Manager.Instance.InvokePattern(this, targetPattern);
         // controller.ChangeState(BossState.Move); 이건 패턴들 뒤에 넣어야할듯?

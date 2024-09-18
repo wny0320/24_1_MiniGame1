@@ -126,34 +126,4 @@ public class Boss1MoveState : BaseState
         }
         return;
     }
-    private Vector3 BossClipping()
-    {
-        /// <summary>
-        /// 보스 클리핑
-        /// </summary>
-        /// <returns>Vector3, player의 clipping된 좌표</returns>
-        
-        Vector3 spriteSize = rb.GetComponent<SpriteRenderer>().sprite.rect.size;
-        Debug.Log(spriteSize);
-        if (controller.ground == null) return Vector3.zero;
-
-        Transform groundTrans = controller.ground.transform;
-        Vector3 groundPos = groundTrans.position;
-        Vector3 groundScale = groundTrans.lossyScale;
-
-        // 스케일이 아닌 스프라이트 사이즈 고려를 해야할듯?
-        Vector3 bossPos = rb.transform.position;
-        Vector3 bossScale = rb.transform.lossyScale;
-
-        // 클립핑할 사각형의 왼쪽 아래점과 오른쪽 위의 점을 구하고 플레이어 rect 사이즈 고려
-        // 아래 코드는 스케일로 작성
-        //Vector2 clipSquareLeftDown = groundPos - groundScale / 2 + bossScale / 2;
-        //Vector2 clipSquareRightUp = groundPos + groundScale / 2 - bossScale / 2;
-
-        Vector2 clipSquareLeftDown = groundPos - groundScale / 2 + spriteSize / 2;
-        Vector2 clipSquareRightUp = groundPos + groundScale / 2 - spriteSize / 2;
-        float clipedXPos = Mathf.Clamp(bossPos.x, clipSquareLeftDown.x, clipSquareRightUp.x);
-        float clipedYPos = Mathf.Clamp(bossPos.y, clipSquareLeftDown.y, clipSquareRightUp.y);
-        return new Vector3(clipedXPos, clipedYPos);
-    }
 }
