@@ -60,12 +60,14 @@ public class PlayerController : BaseController, IReceiveAttack
         BaseState MoveState = new PlayerMoveState(this, rigid2D, animator, transform);
         BaseState DodgeState = new PlayerDodgeState(this, rigid2D, animator, col);
         BaseState ParryState = new PlayerParryState(this, rigid2D, animator);
+        BaseState Diestate = new DieState(this, rigid2D, animator, transform);
 
         //상태 추가
         //states.Add(PlayerState.Idle, IdleState);
         states.Add(PlayerState.Move, MoveState);
         states.Add(PlayerState.Dodge, DodgeState);
         states.Add(PlayerState.Parrying, ParryState);
+        states.Add(PlayerState.Die, Diestate);
 
         //state machine 초기값- Idle
         stateMachine = new StateMachine(MoveState);
@@ -94,6 +96,8 @@ public class PlayerController : BaseController, IReceiveAttack
 
     public void OnHit(float damage)
     {
+        if(!isAlive) return;
+
         if(isParrying)
         {
             Debug.Log("player parryed");
@@ -111,8 +115,10 @@ public class PlayerController : BaseController, IReceiveAttack
         stat.Hp -= finalDamage;
         if(stat.Hp <= 0)
         {
+            isAlive = false;
             Manager.Game.isAlive = false;
             //캐릭터 사망 처리
+            ChangeState(PlayerState.Die);
         }
     }
 

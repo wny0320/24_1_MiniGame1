@@ -10,6 +10,8 @@ public class BaseController : MonoBehaviour
     protected Rigidbody2D rigid2D;
     protected Animator animator;
 
+    public bool isAlive;
+
     //상태 패턴
     #region StateMachine
     protected StateMachine stateMachine;

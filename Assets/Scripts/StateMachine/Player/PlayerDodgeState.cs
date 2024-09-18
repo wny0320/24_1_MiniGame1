@@ -11,8 +11,6 @@ public class PlayerDodgeState : BaseState
     const string X_DIR = "xDir";
     const string Y_DIR = "yDir";
 
-    Collider2D col = null;
-
     private Vector2 dir;
 
     private float dodgingTime = 0.5f;
@@ -23,7 +21,6 @@ public class PlayerDodgeState : BaseState
     {
         pc = controller as PlayerController;
 
-        col = collider;
         Manager.Input.PlayerDodge -= PlayerDodge;
         Manager.Input.PlayerDodge += PlayerDodge;
     }
@@ -31,7 +28,6 @@ public class PlayerDodgeState : BaseState
     public override void OnStateEnter()
     {
         time = 0f;
-        col.enabled = false;
         rb.AddForce(dir*5, ForceMode2D.Impulse);
         animator.SetBool(PLAYER_DODGING, true);
 
@@ -57,7 +53,6 @@ public class PlayerDodgeState : BaseState
     {
         rb.velocity = Vector2.zero;
         pc.isDodging = false;
-        col.enabled = true;
         animator.SetBool(PLAYER_DODGING, false);
     }
 

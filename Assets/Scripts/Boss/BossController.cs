@@ -55,12 +55,13 @@ public class BossController : BaseController, IReceiveAttack
     {
         //상태 생성
         BaseState MoveState = new Boss1MoveState(this, rigid2D, animator, stat);
-        
         BaseState PatternState = new Boss1PatternState(this, rigid2D, animator, stat);
+        BaseState DieState = new DieState(this, rigid2D, animator);
 
         //상태 추가
         states.Add(BossState.Move, MoveState);
         states.Add(BossState.Pattern, PatternState);
+        states.Add(BossState.Die, DieState);
 
         //state machine 초기값
         stateMachine = new StateMachine(MoveState);
@@ -79,6 +80,12 @@ public class BossController : BaseController, IReceiveAttack
             damage *= 0.7f;
         }
         stat.Hp -= damage;
+
+        if(stat.Hp <= 0f)
+        {
+            isAlive = false;
+            ChangeState(BossState.Die);
+        }
     }
 
     public void PatternTimeAdder(float _time)

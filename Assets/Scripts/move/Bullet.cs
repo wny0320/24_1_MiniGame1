@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class Bullet : MonoBehaviour
 {
     Vector3 targetPos = Vector3.zero;
+    float damage = 1f;
+
     public enum eType
     {
         Gun1,Gun2
@@ -36,7 +39,12 @@ public class Bullet : MonoBehaviour
         targetPos = _dir;
     }
 
-   
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.GetComponent<IReceiveAttack>() != null)
+        {
+            collision.GetComponent<IReceiveAttack>().OnHit(1f);
+        }
+    }
 
-    
 }
