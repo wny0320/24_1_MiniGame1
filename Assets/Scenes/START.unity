@@ -224,7 +224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 540366176}
-  - component: {fileID: 540366175}
+  - component: {fileID: 540366177}
   m_Layer: 0
   m_Name: CustomSceneManager
   m_TagString: Untagged
@@ -232,20 +232,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &540366175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 540366174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7415467edb8718944b037d241604994c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  changeSceneButton: {fileID: 889574699}
-  sceneToLoad: 2
 --- !u!4 &540366176
 Transform:
   m_ObjectHideFlags: 0
@@ -261,6 +247,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &540366177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540366174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cebe67ea050822843afb307ffcc41761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &631300026
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,7 +486,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &727139299
 MonoBehaviour:
@@ -584,6 +582,8 @@ GameObject:
   - component: {fileID: 889574701}
   - component: {fileID: 889574700}
   - component: {fileID: 889574699}
+  - component: {fileID: 889574702}
+  - component: {fileID: 889574703}
   m_Layer: 5
   m_Name: play
   m_TagString: Untagged
@@ -608,7 +608,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &889574699
 MonoBehaviour:
@@ -654,8 +654,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -7033087877374230142, guid: 3316aabd5dd7e2743ad1214e35350560, type: 3}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 889574703}
+        m_TargetAssemblyTypeName: SpriteSwitcher, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SpriteSwitcher, Assembly-CSharp
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
@@ -704,6 +716,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889574697}
   m_CullTransparentMesh: 1
+--- !u!114 &889574702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889574697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7415467edb8718944b037d241604994c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customSceneManager: {fileID: 0}
+--- !u!114 &889574703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889574697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7dd76a1dd6a6342b2961a67356cdbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetImage: {fileID: 889574700}
+  sprite1: {fileID: -1632964092117363708, guid: 3316aabd5dd7e2743ad1214e35350560, type: 3}
+  sprite2: {fileID: -7033087877374230142, guid: 3316aabd5dd7e2743ad1214e35350560, type: 3}
+  switchBackDelay: 0.1
 --- !u!1 &931711206
 GameObject:
   m_ObjectHideFlags: 0

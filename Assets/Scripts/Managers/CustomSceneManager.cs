@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneManager
+public class SceneManager : MonoBehaviour
 {
     public void ChangeScene(SceneType Scene)
     {
