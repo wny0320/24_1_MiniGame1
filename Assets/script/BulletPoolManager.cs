@@ -28,6 +28,7 @@ public class BulletPoolManager : MonoBehaviour
             // 부모를 지정해주는 코드, 이 코드가 없으면 하이라키창이 너무 지저분해짐
             newBullet.transform.parent = GameObject.Find(BULLET_POOL).transform;
             newBullet.SetActive(false);
+            newBullet.tag = "Bullet";
             bulletPool.Enqueue(newBullet);
         }
     }
@@ -50,6 +51,7 @@ public class BulletPoolManager : MonoBehaviour
             // 풀이 비어있을 경우, 새로운 총알 생성
             GameObject newBullet = Instantiate(bulletPrefab);
             newBullet.SetActive(true);
+            newBullet.tag = "Bullet";
             return newBullet;
         }
     }

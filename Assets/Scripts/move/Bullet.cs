@@ -1,9 +1,6 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 
 public class Bullet : MonoBehaviour
 {
@@ -12,7 +9,8 @@ public class Bullet : MonoBehaviour
 
     public enum eType
     {
-        Gun1,Gun2
+        Gun1,
+        Gun2
     }
     public eType type;
     private float bulletSpeed; // 총알 속도
@@ -21,11 +19,11 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         bulletSpeed = currentBulletSpeed; // 시작 시 현재 총알 속도로 초기화
+        gameObject.tag = "Bullet"; // 총알 오브젝트에 "Bullet" 태그 설정
     }
 
     void Update()
     {
-       // ChangeGun();
         BulletMove();
     }
 
@@ -36,15 +34,17 @@ public class Bullet : MonoBehaviour
 
     public void BulletDirSet(Vector3 _dir)
     {
-        targetPos = _dir;
+        targetPos = _dir.normalized; // 방향을 정규화하여 설정
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.GetComponent<IReceiveAttack>() != null)
+        // Boss 스크립트를 찾음
+        Boss boss = collision.GetComponent<Boss>();
+        if (boss != null) // 보스에 닿았을 경우
         {
-            collision.GetComponent<IReceiveAttack>().OnHit(1f);
+            boss.TakeDamage(damage); // 보스의 HP 감소
+            Destroy(gameObject); // 총알 삭제
         }
     }
-
 }
